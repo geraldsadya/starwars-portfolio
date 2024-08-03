@@ -4,112 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerald Sadya's Portfolio</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: black;
-        }
-        .begin-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            z-index: 10;
-        }
-        .begin-button {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-            padding: 15px 30px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .begin-button:hover {
-            background: white;
-            color: black;
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        #enter-button {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: yellow;
-            border: none;
-            padding: 10px 20px;
-            font-size: 20px;
-            cursor: pointer;
-            color: black;
-            border-radius: 5px;
-        }
-        #enter-button:hover {
-            background: gold;
-        }
-    </style>
+    <!-- Link to Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="begin-container">
-        <button class="begin-button">BEGIN</button>
+    <div id="loading-screen">
+        <div id="light-pulse"></div>
+        <div id="awakening-text">Awakening the Force...</div>
     </div>
+
+    <div class="begin-container">
+        <button class="begin-button">START</button>
+    </div>
+
     <div class="video-container">
         <video id="intro-video" muted>
             <source src="assets/StarWarsIntroVid.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
+
     <audio id="bg-music" loop>
         <source src="assets/Star Wars.mp3" type="audio/mpeg">
     </audio>
-    <button id="enter-button">Enter</button>
-    <script>
-        const beginButton = document.querySelector('.begin-button');
-        const beginContainer = document.querySelector('.begin-container');
-        const video = document.getElementById('intro-video');
-        const audio = document.getElementById('bg-music');
-        const enterButton = document.getElementById('enter-button');
 
-        // Start video and audio on BEGIN button click
-        beginButton.addEventListener('click', () => {
-            beginContainer.style.display = 'none';
-            video.play();
-            audio.play().catch(error => {
-                console.log('Audio play was prevented:', error);
-            });
-        });
-
-        // Show Enter button when the video ends
-        video.addEventListener('ended', () => {
-            enterButton.style.display = 'block';
-            video.pause();
-            video.currentTime = video.duration; // Ensure the video stops at the last frame
-        });
-
-        // Stop audio when Enter button is clicked
-        enterButton.addEventListener('click', () => {
-            audio.pause();
-            // Add your navigation or other logic here
-            alert("Navigating to the next section");
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

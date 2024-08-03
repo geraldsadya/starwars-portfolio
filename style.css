@@ -3,10 +3,141 @@ body {
     padding: 0;
     overflow: hidden;
     background: black;
-    cursor: url('assets/light-saber-cursor.png'), auto; /* Custom lightsaber cursor */
+    font-family: 'Orbitron', sans-serif; /* Apply Orbitron as the default font */
+}
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    z-index: 10;
+    flex-direction: column;
+}
+
+#light-pulse {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    animation: pulseEffect 7s forwards; /* Duration of 7 seconds to cover all pulses */
+}
+
+#awakening-text {
+    position: absolute;
+    bottom: 50%; /* Positioned between middle and bottom */
+    font-size: 12px; /* 50% smaller text size */
+    color: white;
+    animation: textPulse 7s forwards; /* Synchronize with the pulse effect */
+}
+
+@keyframes pulseEffect {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    14% {
+        transform: scale(2);
+        opacity: 0.8;
+    }
+    28% {
+        transform: scale(3);
+        opacity: 0.6;
+    }
+    42% {
+        transform: scale(4);
+        opacity: 0.4;
+    }
+    56% {
+        transform: scale(5);
+        opacity: 0.3;
+    }
+    70% {
+        transform: scale(6);
+        opacity: 0.2;
+    }
+    84% {
+        transform: scale(7);
+        opacity: 0.1;
+    }
+    100% {
+        transform: scale(50);
+        opacity: 1;
+    }
+}
+
+@keyframes textPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    14% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    28% {
+        transform: scale(1.2);
+        opacity: 0.6;
+    }
+    42% {
+        transform: scale(1.3);
+        opacity: 0.4;
+    }
+    56% {
+        transform: scale(1.4);
+        opacity: 0.3;
+    }
+    70% {
+        transform: scale(1.5);
+        opacity: 0.2;
+    }
+    84% {
+        transform: scale(1.6);
+        opacity: 0.1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 1;
+    }
+}
+
+.begin-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    color: black;
+    z-index: 20;
+}
+
+.begin-button {
+    background: transparent;
+    color: black;
+    border: none;
+    padding: 15px 30px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-family: 'Orbitron', sans-serif; /* Apply Orbitron to the START button */
+}
+
+.begin-button:hover {
+    color: gray;
 }
 
 .video-container {
+    display: none;
     position: relative;
     width: 100%;
     height: 100vh;
@@ -17,23 +148,4 @@ video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-#enter-button {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: yellow;
-    border: none;
-    padding: 10px 20px;
-    font-size: 20px;
-    cursor: pointer;
-    color: black;
-    border-radius: 5px;
-}
-
-#enter-button:hover {
-    background: gold;
 }
