@@ -7,6 +7,12 @@ const beginContainer = document.querySelector('.begin-container');
 const video = document.getElementById('intro-video');
 const audio = document.getElementById('bg-music');
 const loadingScreen = document.getElementById('loading-screen');
+const pageSections = document.querySelectorAll('.page-section');
+
+// Hide the page sections initially
+pageSections.forEach(section => {
+    section.style.display = 'none';
+});
 
 window.addEventListener('load', function() {
     // Ensure the START button appears after the pulse effect ends
@@ -59,7 +65,13 @@ function handleTransition() {
     setTimeout(() => {
         console.log('Video fade out complete, starting 3.js scene...');
         document.querySelector('.video-container').style.display = 'none'; // Hide the video container
-        document.body.style.background = 'black'; // Set background to black
+        document.body.style.overflow = 'auto'; // Allow scrolling
+
+        // Show page sections after video ends
+        pageSections.forEach(section => {
+            section.style.display = 'block';
+        });
+
         startThreeJS(); // Start the 3.js scene
     }, 2000); // Wait for the fade-out to complete before transitioning
 }
@@ -75,9 +87,8 @@ function startThreeJS() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg') });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
 
     // Add orbit controls to rotate around the cube
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -99,6 +110,13 @@ function startThreeJS() {
     scene.add(pointLight);
 
     camera.position.z = 5;
+
+    // Add scroll-based cube rotation
+    window.addEventListener('scroll', () => {
+        const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        cube.rotation.x = scrollPercent * Math.PI * 2;
+        cube.rotation.y = scrollPercent * Math.PI * 2;
+    });
 
     function animate() {
         requestAnimationFrame(animate);

@@ -1,11 +1,13 @@
+/* General Styles */
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
     background: black;
-    font-family: 'Orbitron', sans-serif; /* Apply Orbitron as the default font */
+    font-family: 'Orbitron', sans-serif;
 }
 
+/* Loading Screen */
 #loading-screen {
     position: fixed;
     top: 0;
@@ -26,15 +28,15 @@ body {
     height: 100px;
     background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
     border-radius: 50%;
-    animation: pulseEffect 7s forwards; /* Duration of 7 seconds to cover all pulses */
+    animation: pulseEffect 7s forwards;
 }
 
 #awakening-text {
     position: absolute;
-    bottom: 50%; /* Positioned between middle and bottom */
-    font-size: 12px; /* 50% smaller text size */
+    bottom: 50%;
+    font-size: 12px;
     color: white;
-    animation: textPulse 7s forwards; /* Synchronize with the pulse effect */
+    animation: textPulse 7s forwards;
 }
 
 @keyframes pulseEffect {
@@ -107,6 +109,7 @@ body {
     }
 }
 
+/* Begin Button */
 .begin-container {
     display: none;
     position: fixed;
@@ -129,13 +132,14 @@ body {
     font-size: 24px;
     cursor: pointer;
     transition: color 0.3s ease;
-    font-family: 'Orbitron', sans-serif; /* Apply Orbitron to the START button */
+    font-family: 'Orbitron', sans-serif;
 }
 
 .begin-button:hover {
     color: gray;
 }
 
+/* Video Container */
 .video-container {
     display: none;
     position: relative;
@@ -148,4 +152,28 @@ video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Page Sections */
+.page-section {
+    display: none; /* Hide the sections initially */
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid #444;
+    color: white;
+}
+
+/* Three.js canvas */
+canvas#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
