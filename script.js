@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader';
 
 // Your existing code for handling the start button, video, and audio
 const beginButton = document.querySelector('.begin-button');
@@ -90,18 +91,27 @@ function startThreeJS() {
     const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg') });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Add orbit controls to rotate around the cube
+    // Set tone mapping and exposure
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.65;
+
+    // Add orbit controls to rotate around the torus knot
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // Create a cube geometry
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // Create the twisting torus knot geometry
+    const geometry = new THREE.TorusKnotGeometry(1.0, 0.4, 100, 16);
+    const material = new THREE.MeshStandardMaterial({
+        metalness: 0.2,
+        roughness: 0.0,
+        envMapIntensity: 1.0,
+    });
 
-    // Add lighting
+    const torusKnot = new THREE.Mesh(geometry, material);
+    scene.add(torusKnot);
+
+    // Add lightings
     const ambientLight = new THREE.AmbientLight(0x404040, 2); // Soft white light
     scene.add(ambientLight);
 
@@ -111,15 +121,90 @@ function startThreeJS() {
 
     camera.position.z = 5;
 
-    // Add scroll-based cube rotation
-    window.addEventListener('scroll', () => {
-        const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-        cube.rotation.x = scrollPercent * Math.PI * 2;
-        cube.rotation.y = scrollPercent * Math.PI * 2;
+    // Load environment map
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+
+    const exrLoader = new EXRLoader();
+    exrLoader.load('textures/piz_compressed.exr', function (texture) {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        const exrCubeRenderTarget = pmremGenerator.fromEquirectangular(texture);
+        torusKnot.material.envMap = exrCubeRenderTarget.texture;
+        torusKnot.material.needsUpdate = true;
+        scene.background = texture;
     });
+
+    // Scroll-based animations
+    const animationScripts = [];
+
+    animationScripts.push({
+        start: 0,
+        end: 40,
+        func: () => {
+            camera.lookAt(torusKnot.position);
+            camera.position.set(0, 1, 2);
+            torusKnot.position.z = lerp(-10, 0, scalePercent(0, 40));
+        },
+    });
+
+    animationScripts.push({
+        start: 40,
+        end: 60,
+        func: () => {
+            camera.lookAt(torusKnot.position);
+            camera.position.set(0, 1, 2);
+            torusKnot.rotation.z = lerp(0, Math.PI, scalePercent(40, 60));
+        },
+    });
+
+    animationScripts.push({
+        start: 60,
+        end: 80,
+        func: () => {
+            camera.position.x = lerp(0, 5, scalePercent(60, 80));
+            camera.position.y = lerp(1, 5, scalePercent(60, 80));
+            camera.lookAt(torusKnot.position);
+        },
+    });
+
+    animationScripts.push({
+        start: 80,
+        end: 101,
+        func: () => {
+            torusKnot.rotation.x += 0.01;
+            torusKnot.rotation.y += 0.01;
+        },
+    });
+
+    function lerp(x, y, a) {
+        return (1 - a) * x + a * y;
+    }
+
+    function scalePercent(start, end) {
+        return (scrollPercent - start) / (end - start);
+    }
+
+    let scrollPercent = 0;
+
+    document.body.onscroll = () => {
+        scrollPercent =
+            ((document.documentElement.scrollTop || document.body.scrollTop) /
+                ((document.documentElement.scrollHeight || document.body.scrollHeight) -
+                    document.documentElement.clientHeight)) *
+            100;
+    };
+
+    function playScrollAnimations() {
+        animationScripts.forEach((a) => {
+            if (scrollPercent >= a.start && scrollPercent < a.end) {
+                a.func();
+            }
+        });
+    }
 
     function animate() {
         requestAnimationFrame(animate);
+        playScrollAnimations();
         controls.update();
         renderer.render(scene, camera);
     }
