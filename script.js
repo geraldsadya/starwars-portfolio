@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 // Your existing code for handling the start button, video, and audio
 const beginButton = document.querySelector('.begin-button');
 const beginContainer = document.querySelector('.begin-container');
@@ -6,6 +9,7 @@ const audio = document.getElementById('bg-music');
 const loadingScreen = document.getElementById('loading-screen');
 
 window.addEventListener('load', function() {
+    // Ensure the START button appears after the pulse effect ends
     setTimeout(() => {
         loadingScreen.style.display = 'none';
         beginContainer.style.display = 'flex';
@@ -13,6 +17,7 @@ window.addEventListener('load', function() {
 });
 
 beginButton.addEventListener('click', () => {
+    console.log('START button clicked');
     beginContainer.style.display = 'none';
     document.querySelector('.video-container').style.display = 'block';
     video.play();
@@ -23,6 +28,7 @@ beginButton.addEventListener('click', () => {
 
 // Function to fade out audio
 function fadeOutAudio(audio, duration) {
+    console.log('Fading out audio...');
     let volume = audio.volume;
     const step = volume / (duration / 50);
 
@@ -35,13 +41,14 @@ function fadeOutAudio(audio, duration) {
             clearInterval(fadeAudio);
             audio.pause();
             audio.currentTime = 0; // Reset the audio
+            console.log('Audio fade out complete.');
         }
     }, 50);
 }
 
 // Function to handle the transition after the video ends
 function handleTransition() {
-    console.log('Video ended, transitioning now...'); // This should appear in the console when the video ends
+    console.log('Video ended, transitioning now...');
 
     fadeOutAudio(audio, 2000); // Fade out audio over 2 seconds
 
@@ -50,6 +57,7 @@ function handleTransition() {
     video.style.opacity = 0;
 
     setTimeout(() => {
+        console.log('Video fade out complete, starting 3.js scene...');
         document.querySelector('.video-container').style.display = 'none'; // Hide the video container
         document.body.style.background = 'black'; // Set background to black
         startThreeJS(); // Start the 3.js scene
@@ -61,52 +69,45 @@ video.addEventListener('ended', handleTransition);
 
 // Function to start the Three.js scene
 function startThreeJS() {
-    // Step 1: Set up the scene, camera, and renderer
+    console.log('Starting 3.js scene...');
+
+    // Minimal Three.js setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Step 2: Create two spheres (3D balls)
-    const geometry = new THREE.SphereGeometry(1, 32, 32); // Radius, width segments, height segments
-    const material1 = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
-    const material2 = new THREE.MeshBasicMaterial({ color: 0x0000ff }); // Blue color
+    // Add orbit controls to rotate around the cube
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
 
-    const sphere1 = new THREE.Mesh(geometry, material1);
-    const sphere2 = new THREE.Mesh(geometry, material2);
+    // Create a cube geometry
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-    // Position the spheres
-    sphere1.position.x = -1.5;
-    sphere2.position.x = 1.5;
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0x404040, 2); // Soft white light
+    scene.add(ambientLight);
 
-    // Add spheres to the scene
-    scene.add(sphere1);
-    scene.add(sphere2);
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
 
-    // Step 3: Position the camera
     camera.position.z = 5;
 
-    // Step 4: Animation loop
     function animate() {
         requestAnimationFrame(animate);
-
-        // Rotate the spheres for some animation
-        sphere1.rotation.y += 0.01;
-        sphere2.rotation.y += 0.01;
-
+        controls.update();
         renderer.render(scene, camera);
     }
 
     animate();
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-    });
 }
+
+// Ensure the Three.js scene starts after the video ends
+startThreeJS();
