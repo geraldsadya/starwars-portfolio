@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Your existing code for handling the start button, video, and audio
 const beginButton = document.querySelector('.begin-button');
@@ -91,126 +91,154 @@ function startThreeJS() {
     const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg') });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Set tone mapping and exposure
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.65;
-
-    // Add orbit controls to rotate around the torus knot
+    // Add orbit controls to rotate around the object
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // Create the twisting torus knot geometry
-    const geometry = new THREE.TorusKnotGeometry(1.0, 0.4, 100, 16);
-    const material = new THREE.MeshStandardMaterial({
-        metalness: 0.2,
-        roughness: 0.0,
-        envMapIntensity: 1.0,
+    // Load the GLTF plane model
+    const loader = new GLTFLoader();
+    loader.load('TieFighter/scene.gltf', (gltf) => {
+        const plane = gltf.scene;
+        plane.scale.set(2, 2, 2);  // Adjust the scale if necessary
+        plane.position.set(0, -3, 0);
+        scene.add(plane);
+
+        // Scroll-based animations
+        const animationScripts = [];
+
+        animationScripts.push({
+            start: 0,
+            end: 40,
+            func: () => {
+                camera.lookAt(plane.position);
+                camera.position.set(0, 2, 8);
+                plane.position.z = lerp(-10, 0, scalePercent(0, 40));
+            },
+        });
+
+        animationScripts.push({
+            start: 40,
+            end: 60,
+            func: () => {
+                camera.lookAt(plane.position);
+                camera.position.set(0, 2, 8);
+                plane.rotation.y = lerp(0, Math.PI, scalePercent(40, 60));
+            },
+        });
+
+        animationScripts.push({
+            start: 60,
+            end: 80,
+            func: () => {
+                camera.position.x = lerp(0, 5, scalePercent(60, 80));
+                camera.position.y = lerp(2, 5, scalePercent(60, 80));
+                camera.lookAt(plane.position);
+            },
+        });
+
+        animationScripts.push({
+            start: 80,
+            end: 101,
+            func: () => {
+                plane.rotation.x += 0.01;
+                plane.rotation.y += 0.01;
+            },
+        });
+
+        function lerp(x, y, a) {
+            return (1 - a) * x + a * y;
+        }
+
+        function scalePercent(start, end) {
+            return (scrollPercent - start) / (end - start);
+        }
+
+        let scrollPercent = 0;
+
+        document.body.onscroll = () => {
+            scrollPercent =
+                ((document.documentElement.scrollTop || document.body.scrollTop) /
+                    ((document.documentElement.scrollHeight || document.body.scrollHeight) -
+                        document.documentElement.clientHeight)) *
+                100;
+        };
+
+        function playScrollAnimations() {
+            animationScripts.forEach((a) => {
+                if (scrollPercent >= a.start && scrollPercent < a.end) {
+                    a.func();
+                }
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            playScrollAnimations();
+            animateStars();
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        animate();
     });
 
-    const torusKnot = new THREE.Mesh(geometry, material);
-    scene.add(torusKnot);
-
-    // Add lightings
-    const ambientLight = new THREE.AmbientLight(0x404040, 2); // Soft white light
+    // Add basic lighting
+    const ambientLight = new THREE.AmbientLight(0xaaaaaa, 50); // Soft white light
     scene.add(ambientLight);
 
     const pointLight = new THREE.PointLight(0xffffff, 1);
     pointLight.position.set(5, 5, 5);
     scene.add(pointLight);
 
-    camera.position.z = 5;
+    camera.position.z = 8;
 
-    // Load environment map
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    pmremGenerator.compileEquirectangularShader();
+    // Add star background
+    const stars = [];
+    function addStars() {
+        for (let z = -2000; z < 1000; z += 10) {
+            const starGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const star = new THREE.Mesh(starGeometry, starMaterial);
 
-    const exrLoader = new EXRLoader();
-    exrLoader.load('textures/piz_compressed.exr', function (texture) {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        const exrCubeRenderTarget = pmremGenerator.fromEquirectangular(texture);
-        torusKnot.material.envMap = exrCubeRenderTarget.texture;
-        torusKnot.material.needsUpdate = true;
-        scene.background = texture;
-    });
+            star.position.x = Math.random() * 1000 - 500;
+            star.position.y = Math.random() * 1000 - 500;
+            star.position.z = z;
 
-    // Scroll-based animations
-    const animationScripts = [];
+            star.scale.x = star.scale.y = 2;
 
-    animationScripts.push({
-        start: 0,
-        end: 40,
-        func: () => {
-            camera.lookAt(torusKnot.position);
-            camera.position.set(0, 1, 2);
-            torusKnot.position.z = lerp(-10, 0, scalePercent(0, 40));
-        },
-    });
-
-    animationScripts.push({
-        start: 40,
-        end: 60,
-        func: () => {
-            camera.lookAt(torusKnot.position);
-            camera.position.set(0, 1, 2);
-            torusKnot.rotation.z = lerp(0, Math.PI, scalePercent(40, 60));
-        },
-    });
-
-    animationScripts.push({
-        start: 60,
-        end: 80,
-        func: () => {
-            camera.position.x = lerp(0, 5, scalePercent(60, 80));
-            camera.position.y = lerp(1, 5, scalePercent(60, 80));
-            camera.lookAt(torusKnot.position);
-        },
-    });
-
-    animationScripts.push({
-        start: 80,
-        end: 101,
-        func: () => {
-            torusKnot.rotation.x += 0.01;
-            torusKnot.rotation.y += 0.01;
-        },
-    });
-
-    function lerp(x, y, a) {
-        return (1 - a) * x + a * y;
+            scene.add(star);
+            stars.push(star);
+        }
     }
 
-    function scalePercent(start, end) {
-        return (scrollPercent - start) / (end - start);
+    function animateStars() {
+        for (let i = 0; i < stars.length; i++) {
+            const star = stars[i];
+            star.position.z += i / 10;
+            if (star.position.z > 1000) star.position.z -= 3000;
+        }
     }
 
-    let scrollPercent = 0;
-
-    document.body.onscroll = () => {
-        scrollPercent =
-            ((document.documentElement.scrollTop || document.body.scrollTop) /
-                ((document.documentElement.scrollHeight || document.body.scrollHeight) -
-                    document.documentElement.clientHeight)) *
-            100;
-    };
-
-    function playScrollAnimations() {
-        animationScripts.forEach((a) => {
-            if (scrollPercent >= a.start && scrollPercent < a.end) {
-                a.func();
-            }
-        });
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        playScrollAnimations();
-        controls.update();
-        renderer.render(scene, camera);
-    }
-
-    animate();
+    addStars();
 }
 
 // Ensure the Three.js scene starts after the video ends
 startThreeJS();
+
+// Ripple effect for the cursor
+document.addEventListener('mousemove', (e) => {
+    const ripple = document.createElement('div');
+    ripple.classList.add('ripple');
+
+    // Adjust the position to be exactly on or slightly under the cursor
+    ripple.style.left = `${e.clientX - 10}px`; // Adjust horizontally (-10 to center the ripple)
+    ripple.style.top = `${e.clientY - 10}px`;  // Adjust vertically (-10 to center the ripple or increase the number to place it slightly under the cursor)
+    
+    document.body.appendChild(ripple);
+
+    ripple.addEventListener('animationend', () => {
+        ripple.remove();
+    });
+});
+

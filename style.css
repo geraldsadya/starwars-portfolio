@@ -5,7 +5,9 @@ body {
     overflow: hidden;
     background: black;
     font-family: 'Orbitron', sans-serif;
+    cursor: url('assets/light-saber-cursor2.png'), auto;
 }
+
 
 /* Loading Screen */
 #loading-screen {
@@ -177,3 +179,23 @@ canvas#bg {
     height: 100%;
     z-index: -1;
 }
+
+/* Ripple Effect Styles */
+.ripple {
+    width: 10px;  /* 50% of the original 20px */
+    height: 10px; /* 50% of the original 20px */
+    background-color: rgba(199, 233, 253, 0.8); /* Light blue color */
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;
+    animation: ripple-effect 0.6s ease-out forwards;
+}
+
+@keyframes ripple-effect {
+    to {
+        width: 100px;  /* 50% of the original 200px */
+        height: 100px; /* 50% of the original 200px */
+        opacity: 0;
+    }
+}
+
