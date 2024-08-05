@@ -227,18 +227,24 @@ function startThreeJS() {
 startThreeJS();
 
 // Ripple effect for the cursor
-document.addEventListener('mousemove', (e) => {
-    const ripple = document.createElement('div');
-    ripple.classList.add('ripple');
+function initializeCursorEffects() {
+    document.addEventListener('mousemove', (e) => {
+        const ripple = document.createElement('div');
+        ripple.classList.add('ripple');
 
-    // Adjust the position to be exactly on or slightly under the cursor
-    ripple.style.left = `${e.clientX - 10}px`; // Adjust horizontally (-10 to center the ripple)
-    ripple.style.top = `${e.clientY - 10}px`;  // Adjust vertically (-10 to center the ripple or increase the number to place it slightly under the cursor)
-    
-    document.body.appendChild(ripple);
+        // Adjust the position to be exactly on or slightly under the cursor
+        ripple.style.left = `${e.clientX - 10}px`; // Adjust horizontally (-10 to center the ripple)
+        ripple.style.top = `${e.clientY - 10}px`;  // Adjust vertically (-10 to center the ripple)
+        
+        document.body.appendChild(ripple);
 
-    ripple.addEventListener('animationend', () => {
-        ripple.remove();
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
     });
-});
+}
 
+// Apply the cursor effects globally
+document.addEventListener('DOMContentLoaded', () => {
+    initializeCursorEffects(); // Initialize ripple and light saber cursor
+});

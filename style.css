@@ -8,7 +8,6 @@ body {
     cursor: url('assets/light-saber-cursor2.png'), auto;
 }
 
-
 /* Loading Screen */
 #loading-screen {
     position: fixed;
@@ -189,6 +188,7 @@ canvas#bg {
     position: absolute;
     pointer-events: none;
     animation: ripple-effect 0.6s ease-out forwards;
+    z-index: 9999; /* Ensure it's on top of everything except the cursor */
 }
 
 @keyframes ripple-effect {
@@ -198,4 +198,3 @@ canvas#bg {
         opacity: 0;
     }
 }
-
