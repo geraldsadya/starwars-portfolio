@@ -227,24 +227,23 @@ function startThreeJS() {
 startThreeJS();
 
 // Ripple effect for the cursor
-function initializeCursorEffects() {
-    document.addEventListener('mousemove', (e) => {
-        const ripple = document.createElement('div');
-        ripple.classList.add('ripple');
+document.addEventListener('mousemove', (e) => {
+    const ripple = document.createElement('div');
+    ripple.classList.add('ripple');
 
+    // Get the current scrollable section by checking if the cursor's Y position is within the section's Y range
+    let activeSection = document.elementFromPoint(e.clientX, e.clientY).closest('.page-section');
+
+    if (activeSection) {
         // Adjust the position to be exactly on or slightly under the cursor
-        ripple.style.left = `${e.clientX - 10}px`; // Adjust horizontally (-10 to center the ripple)
-        ripple.style.top = `${e.clientY - 10}px`;  // Adjust vertically (-10 to center the ripple)
-        
-        document.body.appendChild(ripple);
+        ripple.style.left = `${e.clientX - activeSection.getBoundingClientRect().left - 10}px`; // Adjust horizontally
+        ripple.style.top = `${e.clientY - activeSection.getBoundingClientRect().top - 10}px`;  // Adjust vertically
+
+        activeSection.appendChild(ripple);
 
         ripple.addEventListener('animationend', () => {
             ripple.remove();
         });
-    });
-}
-
-// Apply the cursor effects globally
-document.addEventListener('DOMContentLoaded', () => {
-    initializeCursorEffects(); // Initialize ripple and light saber cursor
+    }
 });
+
