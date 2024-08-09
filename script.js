@@ -2,32 +2,34 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-const beginButton = document.getElementById('start-button');
+// Your existing code for handling the start button, video, and audio
+const beginButton = document.querySelector('.begin-button');
 const beginContainer = document.querySelector('.begin-container');
 const video = document.getElementById('intro-video');
 const audio = document.getElementById('bg-music');
 const loadingScreen = document.getElementById('loading-screen');
 const pageSections = document.querySelectorAll('.page-section');
 
-const GLYPHS =
-  'ラドクリフマラソンわたしワタシんょンョたばこタバコとうきょうトウキョウ0123456789±!@#$%^&*()_+ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+// Add this function to your script.js
+
+const GLYPHS = 'ラドクリフマラソンわたしワタシんょンョたばこタバコとうきょうトウキョウ0123456789±!@#$%^&*()_+ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function applyEffect() {
-  const text = 'START';
-  const speed = 5;
+    const text = 'START';
+    const speed = 5;
 
-  beginButton.innerHTML = text.split('').map((char, index) => `
-    <span data-char="${char}"
-      style="--index: ${index}; --char-1: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-2: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-3: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}';">
-      ${char}
-    </span>
-  `).join('');
+    beginButton.innerHTML = text.split('').map((char, index) =>
+        `<span data-char="${char}"
+        style="--index: ${index}; --char-1: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-2: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-3: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}';">
+        ${char}
+        </span>`
+    ).join('');
 
-  beginButton.classList.add('animate');
+    beginButton.classList.add('animate');
 
-  setTimeout(() => {
-    beginButton.classList.remove('animate');
-  }, speed);
+    setTimeout(() => {
+        beginButton.classList.remove('animate');
+    }, speed * 1000);
 }
 
 window.addEventListener('load', function() {
@@ -37,6 +39,20 @@ window.addEventListener('load', function() {
         beginContainer.style.display = 'flex';
         applyEffect(); // Apply the effect immediately when the button appears
         setInterval(applyEffect, 5000); // Repeat the effect every 5 seconds
+    }, 7000); // Show the START button after the pulse effect ends
+});
+
+
+// Hide the page sections initially
+pageSections.forEach(section => {
+    section.style.display = 'none';
+});
+
+window.addEventListener('load', function() {
+    // Ensure the START button appears after the pulse effect ends
+    setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        beginContainer.style.display = 'flex';
     }, 7000); // Show the START button after the pulse effect ends
 });
 
@@ -263,4 +279,3 @@ document.addEventListener('mousemove', (e) => {
         });
     }
 });
-
