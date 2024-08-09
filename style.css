@@ -179,6 +179,17 @@ canvas#bg {
     z-index: -1;
 }
 
+/* New Canvas for interactive cursor, differentiate by class or ID */
+canvas#interactive-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Above the bg canvas but below interactive elements */
+}
+
+
 /* Ripple Effect Styles */
 .ripple {
     width: 10px;  /* 50% of the original 20px */
