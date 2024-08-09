@@ -198,3 +198,31 @@ canvas#bg {
         opacity: 0;
     }
 }
+
+/* Add this to the existing CSS */
+
+/* Begin Button */
+.begin-button > span:not(.sr-only) {
+    position: relative;
+    color: transparent;
+}
+
+.begin-button > span:not(.sr-only)::after {
+    content: attr(data-char);
+    position: absolute;
+    display: inline-block;
+    inset: 0;
+    color: black;
+    animation: flash calc(var(--speed, 2.5) * 1s) calc(var(--index, 0) * 0.1s) steps(1, end);
+}
+
+@keyframes flash {
+    0%, 20%   { content: '_'; }
+    40%  { content: var(--char-1); }
+    60%  { content: var(--char-2); }
+    80%  { content: var(--char-3); }
+}
+
+.begin-button.animate > span:not(.sr-only)::after {
+    animation: flash 2.5s steps(1, end);
+}
