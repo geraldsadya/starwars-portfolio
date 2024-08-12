@@ -332,3 +332,40 @@ window.addEventListener("touchmove", e => {
 
 setupCanvas();
 update(0);
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('#slider-nav .nav-link');
+    function setActiveLink() {
+        let foundActive = false;
+        navLinks.forEach(link => {
+            let section = document.querySelector(link.hash);
+            if (window.scrollY >= section.offsetTop && window.scrollY < section.offsetTop + section.offsetHeight) {
+                link.classList.add('active');
+                foundActive = true;
+            } else {
+                link.classList.remove('active');
+            }
+        });
+        // Set first link as active if none are active (e.g., top of the page)
+        if (!foundActive) navLinks[0].classList.add('active');
+    }
+
+    // Initial check to set active link on load
+    setActiveLink();
+
+    // Set active link on scroll
+    window.addEventListener('scroll', setActiveLink);
+
+    // Smooth scroll on click
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetSection = document.querySelector(this.getAttribute('href'));
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+});
+
+
