@@ -266,8 +266,6 @@ body {
     margin-top: 20px; /* Add top margin to each section to ensure they start below the header */
 }
 
-
-
 #lines {
     position: fixed;
     top: 0;
@@ -326,7 +324,7 @@ body {
 .mouse-icon .border {
     width: 14px;
     height: 22px;
-    border: 2px solid blue; /* Updated to blue border */
+    border: 2px solid #6ef9d8; /* Updated to blue border */
     border-radius: 10px;
     box-sizing: border-box; /* Ensures padding doesn't affect the dimensions */
 }
@@ -334,7 +332,7 @@ body {
 .mouse-icon .point {
     width: 4px;
     height: 4px;
-    background-color: blue; /* Updated to blue */
+    background-color: #6ef9d8; /* Updated to blue */
     border-radius: 50%;
     position: absolute;
     left: 50%; /* Center horizontally within the mouse icon */
@@ -361,7 +359,7 @@ body {
     width: 2px;
     height: 40px;
     margin-left: -1px; /* Centers the line vertically */
-    background-color: blue; /* Line color updated to blue */
+    background-color: white; /* Line color updated to blue */
     animation: line-grow 2s infinite;
 }
 
@@ -386,7 +384,7 @@ body {
     margin-left: 10px; /* Slight space from the mouse icon for clear separation */
     transform: translateY(-50%); /* Move it up by half of its height to align center with the mouse icon */
     font-size: 12px;
-    color: blue; /* Ensures the text is blue as previously set */
+    color: #6ef9d8; /* Ensures the text is blue as previously set */
     white-space: nowrap;
 }
 
@@ -425,7 +423,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: orange;
+    background-color: #6ef9d8;
     transition: transform 0.6s ease-in-out;
     transform: scaleY(0);
     transform-origin: bottom;
@@ -435,4 +433,115 @@ body {
     transition: transform 0.7s ease-in-out 0.5s; /* Add delay here */
     transform: scaleY(1);
     transform-origin: top; /* Fill from top to bottom */
+}
+
+/* Hero Section Style */
+#hero {
+    text-align: center;
+    padding: 100px 20px;
+    background-color: none;
+}
+
+.animated-text, .main-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 2em;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.animated-text {
+    color: #6ef9d8;
+}
+
+.main-text {
+    color: #fff;
+}
+
+.letter {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    animation: slideIn 0.7s forwards;
+    animation-delay: calc(0.05s * var(--index)); /* Increase delay for better effect */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Additional keyframe animation for sliding down */
+@keyframes slideOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 24px; /* Adjust the height of the menu icon */
+    width: 30px; /* Adjust the width of the menu icon */
+}
+
+.menu-icon .line {
+    height: 3px;
+    width: 100%;
+    background-color: #fff; /* White lines */
+}
+
+.menu-container {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Start off-screen */
+    height: 100vh;
+    width: 250px; /* Width of the sliding menu */
+    background-color: #000; /* Background of the menu */
+    transition: left 0.3s ease; /* Smooth transition for sliding in and out */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1400;
+}
+
+.menu {
+    color: #fff;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    padding-left: 20px; /* Padding for the menu items */
+}
+
+.menu li a {
+    display: block;
+    padding: 10px 0;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.menu li a:hover {
+    background-color: #333;
 }

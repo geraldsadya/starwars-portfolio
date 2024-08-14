@@ -368,4 +368,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const textBlocks = document.querySelectorAll('.page-section h3, .page-section h1');
+  const heroSection = document.querySelector('#hero');
+  
+  // Set indexes for letters within each block
+  textBlocks.forEach(block => {
+      const letters = block.querySelectorAll('.letter');
+      letters.forEach((letter, index) => {
+          letter.style.setProperty('--index', index);
+      });
+  });
+
+  // Function to trigger the slide-up animation
+  function slideUp() {
+      textBlocks.forEach(block => {
+          const letters = block.querySelectorAll('.letter');
+          letters.forEach((letter) => {
+              letter.style.animation = 'slideIn 0.7s forwards';
+              letter.style.animationDelay = `calc(0.05s * var(--index))`;
+          });
+      });
+  }
+
+  // Function to trigger the slide-down animation
+  function slideDown() {
+      textBlocks.forEach(block => {
+          const letters = block.querySelectorAll('.letter');
+          letters.forEach((letter) => {
+              letter.style.animation = 'slideOut 0.7s forwards';
+              letter.style.animationDelay = `calc(0.05s * var(--index))`;
+          });
+      });
+  }
+
+  // Intersection Observer to detect when the hero section is in view
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              slideUp();
+          } else {
+              slideDown();
+          }
+      });
+  }, { threshold: 0.5 }); // Trigger when 50% of the hero section is in view
+
+  observer.observe(heroSection);
+});
 
