@@ -549,7 +549,7 @@ body {
     position: fixed;
     left: 90px; /* Aligns with your left line */
     bottom: 50px;
-    width: 200px;
+    width: 400px;
     z-index: 10;
 }
 
@@ -577,15 +577,15 @@ body {
 
 .stat-description {
     font-family: 'Orbitron', sans-serif;
-    font-size: 12px;
+    font-size: 10px; /* Smaller font size */
     color: #6ef9d8;
-    transform: skew(-10deg);
+    /*transform: rotate(-90deg); /* Tilt to the left */
     margin-bottom: 5px;
 }
 
 .stat-number {
     font-family: 'Orbitron', sans-serif;
-    font-size: 24px;
+    font-size: 22px; /* Larger font size */
     font-weight: bold;
     color: #FFFFFF;
 }
