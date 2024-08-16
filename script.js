@@ -416,3 +416,29 @@ document.addEventListener('DOMContentLoaded', function() {
   observer.observe(heroSection);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const statContents = document.querySelectorAll('.stat-content');
+  let currentStatIndex = 0;
+
+  function showNextStat() {
+      // Hide the current stat
+      if (statContents[currentStatIndex]) {
+          statContents[currentStatIndex].classList.remove('active');
+      }
+
+      // Move to the next stat
+      currentStatIndex = (currentStatIndex + 1) % statContents.length;
+
+      // Show the new stat
+      statContents[currentStatIndex].classList.add('active');
+
+      // Schedule the next animation
+      setTimeout(showNextStat, 5000); // Change stat every 5 seconds
+  }
+
+  // Initial setup: show the first stat
+  statContents[currentStatIndex].classList.add('active');
+
+  // Start the animation cycle
+  setTimeout(showNextStat, 5000);
+});
