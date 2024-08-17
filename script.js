@@ -430,15 +430,33 @@ document.addEventListener('DOMContentLoaded', () => {
       currentStatIndex = (currentStatIndex + 1) % statContents.length;
 
       // Show the new stat
-      statContents[currentStatIndex].classList.add('active');
+      const newStat = statContents[currentStatIndex];
+      newStat.classList.add('active');
+
+      // Animate the number
+      const numberElement = newStat.querySelector('.stat-number');
+      const numberText = numberElement.textContent;
+      numberElement.innerHTML = ''; // Clear the content
+      numberText.split('').forEach((char, index) => {
+          const span = document.createElement('span');
+          span.textContent = char;
+          span.style.transitionDelay = `${index * 0.05}s`; // Stagger the animation
+          numberElement.appendChild(span);
+      });
 
       // Schedule the next animation
-      setTimeout(showNextStat, 5000); // Change stat every 5 seconds
+      setTimeout(showNextStat, 7000); // Change stat every 7 seconds
   }
 
   // Initial setup: show the first stat
-  statContents[currentStatIndex].classList.add('active');
+  showNextStat();
+});
 
-  // Start the animation cycle
-  setTimeout(showNextStat, 5000);
+
+const skipButton = document.getElementById('skip-button');
+
+skipButton.addEventListener('click', () => {
+    console.log('Skip button clicked');
+    video.pause(); // Stop the video
+    handleTransition(); // Call the function to transition to the hero page
 });

@@ -155,6 +155,28 @@ video {
     object-fit: cover;
 }
 
+/* Skip Button Styles */
+.skip-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 100; /* Ensure it appears on top of the video */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.skip-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
 /* Page Sections */
 .page-section {
     display: none; /* Hide the sections initially */
@@ -545,59 +567,77 @@ body {
 .menu li a:hover {
     background-color: #333;
 }
+
+
+
+
+
 .animated-stats-container {
     position: fixed;
-    left: 90px; /* Aligns with your left line */
+    left: 90px;
     bottom: 50px;
     width: 400px;
+    height: 220px; /* Increased from 100px to accommodate the higher text */
     z-index: 10;
 }
 
 .animated-stat-box {
     width: 100%;
-    height: 80px;
-    background-color: rgba(255, 0, 0, 0.2); /* Semi-transparent red for testing */
+    height: 100%;
+    background-color: none(255, 0, 0, 0.2);
     overflow: hidden;
     position: relative;
 }
 
 .stat-content {
     position: absolute;
-    bottom: -80px; /* Start off-screen */
+    bottom: -100%;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: flex-start;
     padding: 10px;
     box-sizing: border-box;
-    transition: bottom 0.5s ease-out, opacity 0.5s ease-out;
+    transition: bottom 1s ease-out; /* Slowed down the transition */
 }
 
 .stat-description {
     font-family: 'Orbitron', sans-serif;
-    font-size: 10px; /* Smaller font size */
+    width: 200px;
+    font-size: 9px;
     color: #6ef9d8;
-    /*transform: rotate(-90deg); /* Tilt to the left */
-    margin-bottom: 5px;
+    transform: rotate(-90deg) translateX(-100%) translateY(-100%);
+    transform-origin: left bottom;
+    position: absolute;
+    bottom: calc(90%); /* Increase this value to move it higher */
+    left: 30px; /* Align with the first character of the number */
+    white-space: 100px;
 }
 
 .stat-number {
     font-family: 'Orbitron', sans-serif;
-    font-size: 22px; /* Larger font size */
+    font-size: 20px;
     font-weight: bold;
     color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Initial hidden state */
-.stat-content {
+.stat-number span {
+    display: inline-block;
+    transform: translateY(100%);
     opacity: 0;
-    bottom: -80px;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
 
 /* Active (visible) state */
 .stat-content.active {
-    opacity: 1;
     bottom: 0;
+}
+
+.stat-content.active .stat-number span {
+    transform: translateY(0);
+    opacity: 1;
 }
