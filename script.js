@@ -277,21 +277,29 @@ const params = {
 const trail = new Array(params.pointsNumber).fill().map(() => ({ x: pointer.x, y: pointer.y, dx: 0, dy: 0 }));
 
 function updateMousePosition(eX, eY) {
-    pointer.x = eX;
-    pointer.y = eY;
+  pointer.x = eX;
+  pointer.y = eY + window.scrollY; // Add scroll offset
 }
 
 function setupCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 
+window.addEventListener("resize", setupCanvas);
+
 function update(t) {
-    if (!mouseMoved) {
+      if (!mouseMoved) {
         pointer.x = (.5 + .3 * Math.cos(.002 * t) * (Math.sin(.005 * t))) * window.innerWidth;
-        pointer.y = (.5 + .2 * (Math.cos(.005 * t)) + .1 * Math.cos(.01 * t)) * window.innerHeight;
+        pointer.y = (.5 + .2 * (Math.cos(.005 * t)) + .1 * Math.cos(.01 * t)) * window.innerHeight + window.scrollY;
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    
+    // Translate the canvas context to account for scrolling
+    ctx.translate(0, -window.scrollY);
+
     trail.forEach((p, pIdx) => {
         const prev = pIdx === 0 ? pointer : trail[pIdx - 1];
         const spring = pIdx === 0 ? .4 * params.spring : params.spring;
@@ -317,17 +325,21 @@ function update(t) {
     }
     ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
     ctx.stroke();
+
+    ctx.restore();
     window.requestAnimationFrame(update);
 }
 
 window.addEventListener("resize", setupCanvas);
+
 window.addEventListener("mousemove", e => {
-    mouseMoved = true;
-    updateMousePosition(e.pageX, e.pageY);
+  mouseMoved = true;
+  updateMousePosition(e.clientX, e.clientY);
 });
+
 window.addEventListener("touchmove", e => {
-    mouseMoved = true;
-    updateMousePosition(e.targetTouches[0].pageX, e.targetTouches[0].pageY);
+  mouseMoved = true;
+  updateMousePosition(e.targetTouches[0].clientX, e.targetTouches[0].clientY);
 });
 
 setupCanvas();
