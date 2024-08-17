@@ -17,7 +17,7 @@ body::after {
     height: 100%;
     pointer-events: none;
     background: transparent;
-    opacity: 0.25;
+    opacity: 0.28;
     filter: url(#noise);
     z-index: 9998;
   }
