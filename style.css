@@ -8,6 +8,25 @@ body {
     cursor: url('assets/light-saber-cursor2.png'), auto;
 }
 
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: transparent;
+    opacity: 0.25;
+    filter: url(#noise);
+    z-index: 9998;
+  }
+
+  .top-text {
+    position: relative;
+    z-index: 9999; /* Higher than the noise effect */
+}
+
 /* Loading Screen */
 #loading-screen {
     position: fixed;
@@ -641,3 +660,4 @@ body {
     transform: translateY(0);
     opacity: 1;
 }
+

@@ -10,6 +10,14 @@
     <script type="module" src="script.js" defer></script>
 </head>
 <body>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <filter id="noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+      </svg>
+
     <div id="loading-screen" aria-label="Loading content, please wait.">
         <div id="light-pulse"></div>
         <div id="awakening-text">Awakening the Force...</div>
@@ -99,7 +107,7 @@
 
     <!-- Sections -->
     <section id="hero" class="page-section">
-        <h3 class="animated-text">
+        <h3 class="animated-text top-text">
             <span class="letter">I</span>
             <span class="letter"> </span>
             <span class="letter">A</span>
@@ -127,7 +135,7 @@
             <span class="letter">E</span>
             <span class="letter">.</span>
         </h3>
-        <h1 class="main-text">
+        <h1 class="main-text top-text">
             <span class="letter">A</span>
             <span class="letter">R</span>
             <span class="letter">E</span>
