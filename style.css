@@ -974,3 +974,52 @@ body {
   }
 
 
+
+
+  .page-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.slide-up-text {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.slide-up-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-container {
+    position: absolute;
+    max-width: 300px;
+}
+
+.top-left {
+    top: 20%;
+    left: 10%;
+}
+
+.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bottom-right {
+    bottom: 20%;
+    right: 10%;
+}
+
+.highlight-text {
+    color: rgba(255, 255, 255, 0.2);
+    transition: color 0.5s ease;
+}
+
+.highlight-text span {
+    display: inline-block;
+    transition: color 0.3s ease;
+}

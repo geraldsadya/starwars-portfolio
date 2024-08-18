@@ -499,3 +499,47 @@ function animatePlanetarySystem() {
 
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', animatePlanetarySystem);
+
+
+//about animation
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              if (entry.target.classList.contains('slide-up-text')) {
+                  entry.target.classList.add('visible');
+              } else if (entry.target.classList.contains('text-container')) {
+                  highlightText(entry.target.querySelector('.highlight-text'));
+              }
+          } else {
+              if (entry.target.classList.contains('slide-up-text')) {
+                  entry.target.classList.remove('visible');
+              } else if (entry.target.classList.contains('text-container')) {
+                  unhighlightText(entry.target.querySelector('.highlight-text'));
+              }
+          }
+      });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.slide-up-text, .text-container').forEach(element => {
+      observer.observe(element);
+  });
+
+  function highlightText(paragraph) {
+      if (!paragraph) return;
+      const words = paragraph.textContent.split(' ');
+      paragraph.innerHTML = words.map(word => `<span>${word} </span>`).join('');
+      const spans = paragraph.querySelectorAll('span');
+      spans.forEach((span, i) => {
+          setTimeout(() => {
+              span.style.color = 'white';
+          }, i * 50); // Delay based on word position
+      });
+  }
+
+  function unhighlightText(paragraph) {
+      if (!paragraph) return;
+      paragraph.innerHTML = paragraph.textContent;
+      paragraph.style.color = 'rgba(255, 255, 255, 0.2)';
+  }
+});
