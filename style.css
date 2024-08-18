@@ -662,3 +662,196 @@ body {
     opacity: 1;
 }
 
+.proxz-nav {
+    transform-style: preserve-3d;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.proxz-nav__system {
+    perspective: 900px;
+    position: relative;
+    z-index: 1;
+}
+
+.proxz-nav__orbit, .proxz-nav__orbit:before, .proxz-nav__satellite {
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.proxz-nav__orbit {
+    z-index: 10;
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+    display: flex;
+    align-items: center;
+}
+
+.proxz-nav__orbit:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    z-index: 5;
+    transform: translate(-50%, -50%) translateY(-110px) rotateX(65deg);
+}
+
+.proxz-nav__orbit:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    z-index: 4;
+    transform: translate(-50%, -50%) translateY(-80px) rotateX(65deg);
+}
+
+.proxz-nav__orbit:nth-child(3) {
+    width: 500px;
+    height: 500px;
+    z-index: 3;
+    transform: translate(-50%, -50%) translateY(-50px) rotateX(65deg);
+}
+
+.proxz-nav__orbit:nth-child(4) {
+    width: 500px;
+    height: 500px;
+    z-index: 2;
+    transform: translate(-50%, -50%) translateY(0px) rotateX(65deg);
+}
+
+.proxz-nav__orbit:nth-child(5) {
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+    transform: translate(-50%, -50%) translateY(50px) rotateX(65deg);
+}
+
+.proxz-nav__orbit:nth-child(6) {
+    width: 300px;
+    height: 300px;
+    z-index: 0;
+    transform: translate(-50%, -50%) translateY(100px) rotateX(65deg);
+}
+
+.proxz-nav__orbit:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    box-sizing: border-box;
+    border: 1px dotted rgba(112, 230, 255, 0.5);
+    transform: translate(-50%, -50%) rotate(0);
+    animation: orbitRotation 40s linear infinite reverse;
+}
+
+.proxz-nav__orbit:hover {
+    cursor: pointer;
+}
+
+.proxz-nav__orbit:hover:before {
+    border-width: 2px;
+    border-color: #70e6ff;
+}
+
+.proxz-nav__orbit:hover .proxz-nav__label {
+    opacity: 1;
+    text-shadow: 0 0 1em #70e6ff;
+}
+
+.proxz-nav__orbit:hover .proxz-nav__satellite:before {
+    opacity: 1;
+}
+
+.proxz-nav__satellite {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transform: translate(-50%, -50%) rotate(0);
+    animation: orbitRotation 40s linear infinite;
+    transform-style: preserve-3d;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.proxz-nav__satellite:before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 4px);
+    border-radius: 50%;
+    transform: rotate(0) rotateX(-90deg);
+    opacity: .25;
+    animation: satelliteRotation 40s linear infinite reverse;
+}
+
+.proxz-nav__label {
+    opacity: 0;
+    padding: 0 8px 48px 0;
+    pointer-events: none;
+    text-align: left;
+    text-transform: uppercase;
+    transform-origin: 100% 50%;
+    transform: rotate(0) rotateX(-90deg);
+    transition: opacity .25s ease-in-out;
+    animation: satelliteRotation 40s linear infinite reverse;
+}
+
+.proxz-nav__description {
+    display: block;
+    font-size: 12px;
+    color: rgba(254, 254, 254, 0.75);
+}
+
+.hologram {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    z-index: 0;
+    border-radius: 50%;
+    background-image: radial-gradient(to top, #70e6ff, rgba(0, 177, 214, 0.3));
+    background-repeat: no-repeat;
+    box-shadow: 0 0.7em 0.25em -0.6em rgba(0, 0, 0, 0.5), 0 0.6em 1em -0.4em black, 0 0 1.5em 0 #70e6ff, 0 0 6em 1em rgba(112, 230, 255, 0.5), 0 0 3em 0.5em rgba(112, 230, 255, 0.5);
+    transform-style: preserve-3d;
+    pointer-events: none;
+}
+
+@keyframes orbitRotation {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes satelliteRotation {
+    100% {
+        transform: rotate(360deg) rotateX(-90deg);
+    }
+}
+
+/* Specific styles for each orbit */
+.proxz-nav__orbit:nth-child(1) .proxz-nav__label,
+.proxz-nav__orbit:nth-child(1) .proxz-nav__satellite,
+.proxz-nav__orbit:nth-child(1) .proxz-nav__satellite:before {
+    animation-duration: 38s;
+}
+
+.proxz-nav__orbit:nth-child(1) .proxz-nav__satellite:before {
+    background-color: #70ffdb;
+}
+
+.proxz-nav__orbit:nth-child(1) .proxz-nav__label {
+    color: #70ffdb;
+}
+
+.proxz-nav__orbit:nth-child(1) .proxz-nav__label:before {
+    content: "01";
+    color: rgba(254, 254, 254, 0.75);
+    padding-right: 8px;
+}
+
+/* Repeat similar styles for orbits 2-6, changing colors and animation durations as needed */

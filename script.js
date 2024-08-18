@@ -472,3 +472,33 @@ skipButton.addEventListener('click', () => {
     video.pause(); // Stop the video
     handleTransition(); // Call the function to transition to the hero page
 });
+
+
+
+// Planetary System Animation
+function animatePlanetarySystem() {
+  const orbits = document.querySelectorAll('.proxz-nav__orbit');
+  orbits.forEach((orbit, index) => {
+      const satellite = orbit.querySelector('.proxz-nav__satellite');
+      const label = orbit.querySelector('.proxz-nav__label');
+      
+      // Set different animation durations for each orbit
+      const duration = 38 - (index * 2); // 38s, 36s, 34s, ...
+      
+      satellite.style.animationDuration = `${duration}s`;
+      label.style.animationDuration = `${duration}s`;
+      
+      // Set different colors for each orbit
+      const hue = 150 + (index * 30); // Different hue for each orbit
+      const color = `hsl(${hue}, 100%, 70%)`;
+      
+      satellite.style.setProperty('--orbit-color', color);
+      label.style.color = color;
+      
+      // Set the project number
+      label.querySelector('.proxz-nav__description').textContent = `Project ${index + 1}`;
+  });
+}
+
+// Call this function after the DOM is loaded
+document.addEventListener('DOMContentLoaded', animatePlanetarySystem);
