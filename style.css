@@ -996,6 +996,18 @@ body {
 .text-container {
     position: absolute;
     max-width: 300px;
+    margin-bottom: 100px; /* Add this line to increase vertical separation */
+}
+
+#about {
+    height: 150vh; /* Increase the height of the about section */
+    padding-top: 100px; /* Add top padding to push content down */
+}
+
+#about h2 {
+    position: absolute;
+    left: 120px; /* Adjust this value to position the heading to the right of the left line */
+    top: 50px;
 }
 
 .top-left {
@@ -1016,10 +1028,10 @@ body {
 
 .highlight-text {
     color: rgba(255, 255, 255, 0.2);
-    transition: color 0.5s ease;
+    transition: color 1s ease; /* Increased from 0.5s to 1s */
 }
 
 .highlight-text span {
     display: inline-block;
-    transition: color 0.3s ease;
+    transition: color 0.8s ease; /* Increased from 0.3s to 0.8s */
 }

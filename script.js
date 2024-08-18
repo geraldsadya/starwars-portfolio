@@ -526,16 +526,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function highlightText(paragraph) {
-      if (!paragraph) return;
-      const words = paragraph.textContent.split(' ');
-      paragraph.innerHTML = words.map(word => `<span>${word} </span>`).join('');
-      const spans = paragraph.querySelectorAll('span');
-      spans.forEach((span, i) => {
-          setTimeout(() => {
-              span.style.color = 'white';
-          }, i * 50); // Delay based on word position
-      });
-  }
+    if (!paragraph) return;
+    const words = paragraph.textContent.split(' ');
+    paragraph.innerHTML = words.map(word => `<span>${word} </span>`).join('');
+    const spans = paragraph.querySelectorAll('span');
+    const totalWords = spans.length;
+    spans.forEach((span, i) => {
+        const delay = (i / totalWords) * 1500; // Adjust total animation time here (1500ms = 1.5s)
+        setTimeout(() => {
+            span.style.color = 'white';
+        }, delay);
+    });
+}
 
   function unhighlightText(paragraph) {
       if (!paragraph) return;
