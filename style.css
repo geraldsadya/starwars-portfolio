@@ -652,7 +652,10 @@ body {
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
 
-/* Active (visible) state */
+
+
+
+/* Active (visible) state PLANETARY SYSTEM*/
 .stat-content.active {
     bottom: 0;
 }
@@ -668,7 +671,7 @@ body {
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-left: 73%;
 }
 
 .proxz-nav__system {
@@ -740,7 +743,7 @@ body {
     height: 100%;
     z-index: 0;
     box-sizing: border-box;
-    border: 1px dotted rgba(112, 230, 255, 0.5);
+    border: 1px dotted rgba(112, 230, 255, 0.6);
     transform: translate(-50%, -50%) rotate(0);
     animation: orbitRotation 40s linear infinite reverse;
 }
@@ -786,7 +789,7 @@ body {
     top: calc(50% - 4px);
     border-radius: 50%;
     transform: rotate(0) rotateX(-90deg);
-    opacity: .25;
+    opacity: .5;
     animation: satelliteRotation 40s linear infinite reverse;
 }
 

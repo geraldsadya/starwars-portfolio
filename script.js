@@ -474,8 +474,6 @@ skipButton.addEventListener('click', () => {
 });
 
 
-
-// Planetary System Animation
 function animatePlanetarySystem() {
   const orbits = document.querySelectorAll('.proxz-nav__orbit');
   orbits.forEach((orbit, index) => {
@@ -495,12 +493,9 @@ function animatePlanetarySystem() {
       satellite.style.setProperty('--orbit-color', color);
       label.style.color = color;
       
-      // Set the project number
-      label.querySelector('.proxz-nav__description').textContent = `Project ${index + 1}`;
+      // Leave the project description as it is in the HTML
   });
 }
 
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', animatePlanetarySystem);
-
-ß
