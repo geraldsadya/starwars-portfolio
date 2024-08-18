@@ -502,3 +502,5 @@ function animatePlanetarySystem() {
 
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', animatePlanetarySystem);
+
+ß

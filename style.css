@@ -855,3 +855,119 @@ body {
 }
 
 /* Repeat similar styles for orbits 2-6, changing colors and animation durations as needed */
+.proxz-nav__orbit:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    z-index: 4;
+    transform: translate(-50%, -50%) translateY(-80px) rotateX(65deg);
+  }
+  .proxz-nav__orbit:nth-child(2) .proxz-nav__label,
+  .proxz-nav__orbit:nth-child(2) .proxz-nav__satellite,
+  .proxz-nav__orbit:nth-child(2) .proxz-nav__satellite:before {
+    animation-duration: 36s;
+  }
+  .proxz-nav__orbit:nth-child(2) .proxz-nav__satellite:before {
+    background-color: #70ffa0;
+  }
+  .proxz-nav__orbit:nth-child(2) .proxz-nav__label {
+    color: #70ffa0;
+  }
+  .proxz-nav__orbit:nth-child(2) .proxz-nav__label:before {
+    content: "02";
+    color: rgba(254, 254, 254, 0.75);
+    padding-right: 8px;
+  }
+  
+  .proxz-nav__orbit:nth-child(3) {
+    width: 500px;
+    height: 500px;
+    z-index: 3;
+    transform: translate(-50%, -50%) translateY(-50px) rotateX(65deg);
+  }
+  .proxz-nav__orbit:nth-child(3) .proxz-nav__label,
+  .proxz-nav__orbit:nth-child(3) .proxz-nav__satellite,
+  .proxz-nav__orbit:nth-child(3) .proxz-nav__satellite:before {
+    animation-duration: 34s;
+  }
+  .proxz-nav__orbit:nth-child(3) .proxz-nav__satellite:before {
+    background-color: #7cff70;
+  }
+  .proxz-nav__orbit:nth-child(3) .proxz-nav__label {
+    color: #7cff70;
+  }
+  .proxz-nav__orbit:nth-child(3) .proxz-nav__label:before {
+    content: "03";
+    color: rgba(254, 254, 254, 0.75);
+    padding-right: 8px;
+  }
+  
+  .proxz-nav__orbit:nth-child(4) {
+    width: 500px;
+    height: 500px;
+    z-index: 2;
+    transform: translate(-50%, -50%) translateY(0px) rotateX(65deg);
+  }
+  .proxz-nav__orbit:nth-child(4) .proxz-nav__label,
+  .proxz-nav__orbit:nth-child(4) .proxz-nav__satellite,
+  .proxz-nav__orbit:nth-child(4) .proxz-nav__satellite:before {
+    animation-duration: 32s;
+  }
+  .proxz-nav__orbit:nth-child(4) .proxz-nav__satellite:before {
+    background-color: #b8ff70;
+  }
+  .proxz-nav__orbit:nth-child(4) .proxz-nav__label {
+    color: #b8ff70;
+  }
+  .proxz-nav__orbit:nth-child(4) .proxz-nav__label:before {
+    content: "04";
+    color: rgba(254, 254, 254, 0.75);
+    padding-right: 8px;
+  }
+  
+  .proxz-nav__orbit:nth-child(5) {
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+    transform: translate(-50%, -50%) translateY(50px) rotateX(65deg);
+  }
+  .proxz-nav__orbit:nth-child(5) .proxz-nav__label,
+  .proxz-nav__orbit:nth-child(5) .proxz-nav__satellite,
+  .proxz-nav__orbit:nth-child(5) .proxz-nav__satellite:before {
+    animation-duration: 30s;
+  }
+  .proxz-nav__orbit:nth-child(5) .proxz-nav__satellite:before {
+    background-color: #f3ff70;
+  }
+  .proxz-nav__orbit:nth-child(5) .proxz-nav__label {
+    color: #f3ff70;
+  }
+  .proxz-nav__orbit:nth-child(5) .proxz-nav__label:before {
+    content: "05";
+    color: rgba(254, 254, 254, 0.75);
+    padding-right: 8px;
+  }
+  
+  .proxz-nav__orbit:nth-child(6) {
+    width: 300px;
+    height: 300px;
+    z-index: 0;
+    transform: translate(-50%, -50%) translateY(100px) rotateX(65deg);
+  }
+  .proxz-nav__orbit:nth-child(6) .proxz-nav__label,
+  .proxz-nav__orbit:nth-child(6) .proxz-nav__satellite,
+  .proxz-nav__orbit:nth-child(6) .proxz-nav__satellite:before {
+    animation-duration: 28s;
+  }
+  .proxz-nav__orbit:nth-child(6) .proxz-nav__satellite:before {
+    background-color: #ffcf70;
+  }
+  .proxz-nav__orbit:nth-child(6) .proxz-nav__label {
+    color: #ffcf70;
+  }
+  .proxz-nav__orbit:nth-child(6) .proxz-nav__label:before {
+    content: "06";
+    color: rgba(254, 254, 254, 0.75);
+    padding-right: .5em;
+  }
+
+
