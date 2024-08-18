@@ -88,26 +88,31 @@ function fadeOutAudio(audio, duration) {
 
 // Function to handle the transition after the video ends
 function handleTransition() {
-    console.log('Video ended, transitioning now...');
+  console.log('Video ended, transitioning now...');
 
-    fadeOutAudio(audio, 2000); // Fade out audio over 2 seconds
+  fadeOutAudio(audio, 2000); // Fade out audio over 2 seconds
 
-    // Fade out video
-    video.style.transition = 'opacity 2s ease';
-    video.style.opacity = 0;
+  // Fade out video
+  video.style.transition = 'opacity 2s ease';
+  video.style.opacity = 0;
 
-    setTimeout(() => {
-        console.log('Video fade out complete, starting 3.js scene...');
-        document.querySelector('.video-container').style.display = 'none'; // Hide the video container
-        document.body.style.overflow = 'auto'; // Allow scrolling
+  setTimeout(() => {
+      console.log('Video fade out complete, starting 3.js scene...');
+      document.querySelector('.video-container').style.display = 'none'; // Hide the video container
+      document.body.style.overflow = 'auto'; // Allow scrolling
 
-        // Show page sections after video ends
-        pageSections.forEach(section => {
-            section.style.display = 'block';
-        });
+      // Show page sections after video ends
+      pageSections.forEach(section => {
+          section.style.display = 'block';
+      });
 
-        startThreeJS(); // Start the 3.js scene
-    }, 2000); // Wait for the fade-out to complete before transitioning
+      // Show post-video elements
+      document.querySelectorAll('.post-video-element').forEach(element => {
+          element.style.display = 'block';
+      });
+
+      startThreeJS(); // Start the 3.js scene
+  }, 2000); // Wait for the fade-out to complete before transitioning
 }
 
 // Event listener for when the video ends
@@ -468,9 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const skipButton = document.getElementById('skip-button');
 
 skipButton.addEventListener('click', () => {
-    console.log('Skip button clicked');
-    video.pause(); // Stop the video
-    handleTransition(); // Call the function to transition to the hero page
+  console.log('Skip button clicked');
+  video.pause(); // Stop the video
+  handleTransition(); // Call the function to transition to the hero page
 });
 
 
