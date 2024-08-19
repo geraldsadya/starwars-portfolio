@@ -1042,3 +1042,29 @@ body {
     display: inline-block;
     transition: color 0.8s ease; /* Increased from 0.3s to 0.8s */
 }
+
+
+
+
+
+#project-card {
+    position: absolute;
+    width: 30vw;
+    height: 50vh;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    color: #6ef9d8;
+    overflow: auto;
+}
+
+#project-card h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#project-card p {
+    font-size: 16px;
+}

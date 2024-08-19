@@ -90,29 +90,66 @@ function fadeOutAudio(audio, duration) {
 function handleTransition() {
   console.log('Video ended, transitioning now...');
 
-  fadeOutAudio(audio, 2000); // Fade out audio over 2 seconds
+  fadeOutAudio(audio, 3000); // Fade out audio over 3 seconds
 
-  // Fade out video
-  video.style.transition = 'opacity 2s ease';
+  // Fade out video more slowly
+  video.style.transition = 'opacity 3s ease';
   video.style.opacity = 0;
+
+  // Create a black overlay for smooth transition
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'black';
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 3s ease';
+  overlay.style.zIndex = '999';
+  document.body.appendChild(overlay);
+
+  setTimeout(() => {
+      overlay.style.opacity = '1';
+  }, 100);
 
   setTimeout(() => {
       console.log('Video fade out complete, starting 3.js scene...');
-      document.querySelector('.video-container').style.display = 'none'; // Hide the video container
-      document.body.style.overflow = 'auto'; // Allow scrolling
+      document.querySelector('.video-container').style.display = 'none';
+      document.body.style.overflow = 'auto';
 
       // Show page sections after video ends
       pageSections.forEach(section => {
           section.style.display = 'block';
+          section.style.opacity = '0';
+          section.style.transition = 'opacity 2s ease';
       });
 
       // Show post-video elements
       document.querySelectorAll('.post-video-element').forEach(element => {
           element.style.display = 'block';
+          element.style.opacity = '0';
+          element.style.transition = 'opacity 2s ease';
       });
 
-      startThreeJS(); // Start the 3.js scene
-  }, 2000); // Wait for the fade-out to complete before transitioning
+      startThreeJS();
+
+      // Fade in the content
+      setTimeout(() => {
+          overlay.style.opacity = '0';
+          pageSections.forEach(section => {
+              section.style.opacity = '1';
+          });
+          document.querySelectorAll('.post-video-element').forEach(element => {
+              element.style.opacity = '1';
+          });
+      }, 500);
+
+      // Remove the overlay after it fades out
+      setTimeout(() => {
+          overlay.remove();
+      }, 3500);
+  }, 3000);
 }
 
 // Event listener for when the video ends
@@ -474,8 +511,8 @@ const skipButton = document.getElementById('skip-button');
 
 skipButton.addEventListener('click', () => {
   console.log('Skip button clicked');
-  video.pause(); // Stop the video
-  handleTransition(); // Call the function to transition to the hero page
+  video.pause();
+  handleTransition();
 });
 
 
@@ -548,5 +585,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!paragraph) return;
       paragraph.innerHTML = paragraph.textContent;
       paragraph.style.color = 'rgba(255, 255, 255, 0.2)';
+  }
+});
+
+
+//card on work page
+document.addEventListener('DOMContentLoaded', () => {
+  const projectCard = document.getElementById('project-card');
+  const satellites = document.querySelectorAll('.proxz-nav__satellite');
+
+  satellites.forEach(satellite => {
+      satellite.addEventListener('click', (e) => {
+          e.preventDefault();
+          const label = satellite.querySelector('.proxz-nav__label');
+          const title = label.textContent.trim();
+          const description = label.querySelector('.proxz-nav__description').textContent;
+
+          updateProjectCard(title, description);
+      });
+  });
+
+  function updateProjectCard(title, description) {
+      projectCard.innerHTML = `
+          <h1 class="textGlow animated">${title}</h1>
+          <p class="textGlow animated">${description}</p>
+      `;
   }
 });
