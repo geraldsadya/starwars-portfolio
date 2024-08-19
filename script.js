@@ -591,24 +591,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //card on work page
 document.addEventListener('DOMContentLoaded', () => {
-  const projectCard = document.getElementById('project-card');
-  const satellites = document.querySelectorAll('.proxz-nav__satellite');
+  const projectCard = document.querySelector('.project-card');
+  const planets = document.querySelectorAll('.proxz-nav__satellite');
 
-  satellites.forEach(satellite => {
-      satellite.addEventListener('click', (e) => {
+  planets.forEach(planet => {
+      planet.addEventListener('click', (e) => {
           e.preventDefault();
-          const label = satellite.querySelector('.proxz-nav__label');
-          const title = label.textContent.trim();
-          const description = label.querySelector('.proxz-nav__description').textContent;
+          const projectName = planet.querySelector('.proxz-nav__label').textContent;
+          const projectDescription = planet.querySelector('.proxz-nav__description').textContent;
+          
+          projectCard.innerHTML = `
+              <h2>${projectName}</h2>
+              <p>${projectDescription}</p>
+          `;
 
-          updateProjectCard(title, description);
+          // Add animation class
+          projectCard.classList.add('card-update');
+          setTimeout(() => projectCard.classList.remove('card-update'), 500);
       });
   });
-
-  function updateProjectCard(title, description) {
-      projectCard.innerHTML = `
-          <h1 class="textGlow animated">${title}</h1>
-          <p class="textGlow animated">${description}</p>
-      `;
-  }
 });

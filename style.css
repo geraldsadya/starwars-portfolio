@@ -1047,24 +1047,48 @@ body {
 
 
 
-#project-card {
+.work-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.proxz-nav {
+    width: 60%;
+}
+
+.project-card {
     position: absolute;
     width: 30vw;
     height: 50vh;
-    top: 50%;
+    top: 30%;
     left: 10%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(110, 249, 216, 0.1);
+    border: 2px solid #6ef9d8;
+    border-radius: 10px;
     padding: 20px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.5s ease;
+}
+
+.project-card h2 {
     color: #6ef9d8;
-    overflow: auto;
+    margin-bottom: 10px;
 }
 
-#project-card h1 {
-    font-size: 24px;
-    margin-bottom: 15px;
+.project-card p {
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-#project-card p {
-    font-size: 16px;
+@keyframes cardUpdate {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.card-update {
+    animation: cardUpdate 0.5s ease;
 }
