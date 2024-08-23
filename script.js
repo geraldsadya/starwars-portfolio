@@ -239,6 +239,7 @@ function startThreeJS() {
                 100;
         };
 
+
         function playScrollAnimations() {
             animationScripts.forEach((a) => {
                 if (scrollPercent >= a.start && scrollPercent < a.end) {
@@ -296,6 +297,17 @@ function startThreeJS() {
     }
 
     addStars();
+    
+}
+
+
+function animate() {
+    requestAnimationFrame(animate);
+    playScrollAnimations();
+    animateStars();
+    loadStormTrooper(); // Call the loadStormTrooper function here
+    controls.update();
+    renderer.render(scene, camera);
 }
 
 // Ensure the Three.js scene starts after the video ends
@@ -592,13 +604,22 @@ document.addEventListener('DOMContentLoaded', () => {
 //card on work page
 document.addEventListener('DOMContentLoaded', () => {
   const projectCard = document.querySelector('.project-card');
-  const planets = document.querySelectorAll('.proxz-nav__satellite');
+  const orbits = document.querySelectorAll('.proxz-nav__orbit');
 
-  planets.forEach(planet => {
-      planet.addEventListener('click', (e) => {
+  orbits.forEach(orbit => {
+      const satellite = orbit.querySelector('.proxz-nav__satellite');
+      
+      satellite.addEventListener('click', (e) => {
           e.preventDefault();
-          const projectName = planet.querySelector('.proxz-nav__label').textContent;
-          const projectDescription = planet.querySelector('.proxz-nav__description').textContent;
+          
+          // Remove 'selected' class from all orbits
+          orbits.forEach(o => o.classList.remove('selected'));
+          
+          // Add 'selected' class to clicked orbit
+          orbit.classList.add('selected');
+          
+          const projectName = orbit.querySelector('.proxz-nav__label').textContent;
+          const projectDescription = orbit.querySelector('.proxz-nav__description').textContent;
           
           projectCard.innerHTML = `
               <h2>${projectName}</h2>
@@ -609,5 +630,62 @@ document.addEventListener('DOMContentLoaded', () => {
           projectCard.classList.add('card-update');
           setTimeout(() => projectCard.classList.remove('card-update'), 500);
       });
+      
+      // Optional: Remove 'selected' class when hovering over a different orbit
+      orbit.addEventListener('mouseenter', () => {
+          if (!orbit.classList.contains('selected')) {
+              orbits.forEach(o => o.classList.remove('selected'));
+          }
+      });
   });
 });
+
+//contact
+
+document.addEventListener('DOMContentLoaded', () => {
+  const contactHeading = document.querySelector('#contact .slide-up-text');
+  const contactForm = document.querySelector('.contact-form');
+  
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              contactHeading.classList.add('visible');
+              contactForm.style.opacity = '1';
+              contactForm.style.transform = 'translateY(0)';
+          } else {
+              contactHeading.classList.remove('visible');
+              contactForm.style.opacity = '0';
+              contactForm.style.transform = 'translateY(50px)';
+          }
+      });
+  }, { threshold: 0.1 });
+
+  observer.observe(document.querySelector('#contact'));
+
+  // Handle form submission
+  document.getElementById('sendMessage').addEventListener('click', (e) => {
+      e.preventDefault();
+      // Add your form submission logic here
+      console.log('Form submitted');
+  });
+
+  // Add focus and blur event listeners to inputs
+  const inputs = document.querySelectorAll('.input-group input, .input-group textarea');
+  inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+          const leftLine = input.previousElementSibling;
+          const rightLine = input.nextElementSibling.nextElementSibling;
+          leftLine.style.backgroundColor = '#6ef9d8';
+          rightLine.style.backgroundColor = '#6ef9d8';
+      });
+      input.addEventListener('blur', () => {
+          if (!input.value) {
+              const leftLine = input.previousElementSibling;
+              const rightLine = input.nextElementSibling.nextElementSibling;
+              leftLine.style.backgroundColor = '#444';
+              rightLine.style.backgroundColor = '#444';
+          }
+      });
+  });
+});
+

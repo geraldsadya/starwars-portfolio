@@ -108,6 +108,7 @@
     </div>
 
 
+
     <!-- Sections -->
     <section id="hero" class="page-section">
         <h3 class="animated-text top-text">
@@ -175,17 +176,19 @@
     </section>
 
     <section id="about" class="page-section">
-        <h2 class="slide-up-text">About Me</h2>
+        <h2 class="slide-up-text">The Story</h2>
         <div class="text-container top-left">
-            <p class="highlight-text">I was born in Venice in september '86, today I live in Como and work at Sketchin, an advanced-design studio, as Creative Technologist.</p>
+            <p class="highlight-text">It was foretold in the ancient scrolls that one would rise, a master of code, destined to bring balance to the digital realms. With a mind sharper than a lightsaber and a wit quicker than the Millennium Falcon, the journey began in a galaxy not so far away.</p>
         </div>
         <div class="text-container center">
-            <p class="highlight-text">Since then I have been designing and implementing virtual experiences. I have studied different programming languages and databases to cover the whole stack.</p>
+            <p class="highlight-text">Whispers of this one’s prowess spread across the stars, crafting experiences that made the holocrons glow with envy. Legends spoke of impossible feats: code that defied logic, designs that bent reality, and innovations that left even the Sith in awe.</p>
         </div>
         <div class="text-container bottom-right">
-            <p class="highlight-text">Today I think in Javascript. My mission is to create engaging digital products that solve real problems for real people.</p>
+            <p class="highlight-text">And now, as the prophecy nears its fulfillment, the mission remains clear: to forge paths unknown, to challenge the impossible, and to ensure that in the battle between creativity and conformity, creativity reigns supreme. The force is strong with this one.</p>
         </div>
     </section>
+    
+    
 
 
     <section id="work" class="page-section">
@@ -237,15 +240,39 @@
                 <div class="hologram"></div>
             </div>
             <div class="project-card">
-                <h2>Explore Projects</h2>
-                <p>Hover over and click on a planet to learn more about each project.</p>
+                <h1 class="textGlow animated">Hover & Click</h1>
+                <p class="textGlow animated">Hover over a planet and click to see project details.</p>
             </div>
     </section>
 
 
 
-    <section id="contact" class="page-section">
-        <p>Interested in collaborating? Visit my Contact page to reach out and discuss potential opportunities or inquiries.</p>
+    <section id="contact" class="page-section"> 
+        <h2 class="slide-up-text">Contact</h2>
+        <div class="contact-container">
+            <div class="contact-form">
+                <div class="input-group">
+                    <span class="input-line left"></span>
+                    <input type="text" id="fullName" required>
+                    <span class="input-label">FULL NAME*</span>
+                    <span class="input-line right"></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-line left"></span>
+                    <input type="email" id="email" required>
+                    <span class="input-label">YOUR BEST EMAIL*</span>
+                    <span class="input-line right"></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-line left"></span>
+                    <textarea id="message" required></textarea>
+                    <span class="input-label">MESSAGE*</span>
+                    <span class="input-line right"></span>
+                </div>
+                <button id="sendMessage" class="send-button">SEND MESSAGE</button>
+            </div>
+        </div>
+        <div id="stormtrooper-container"></div>
     </section>
 </body>
 </html>

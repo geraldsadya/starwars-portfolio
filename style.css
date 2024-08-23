@@ -217,6 +217,8 @@ video {
     color: white;
 }
 
+
+
 /* Three.js canvas */
 canvas#bg {
     position: fixed;
@@ -599,6 +601,8 @@ body {
 
 
 
+
+
 .animated-stats-container {
     position: fixed;
     left: 90px;
@@ -631,7 +635,7 @@ body {
 }
 
 .stat-description {
-    font-family: 'Orbitron', sans-serif;
+    font-family: sans-serif;
     width: 200px;
     font-size: 9px;
     color: #6ef9d8;
@@ -640,7 +644,7 @@ body {
     position: absolute;
     bottom: calc(90%); /* Increase this value to move it higher */
     left: 30px; /* Align with the first character of the number */
-    white-space: 100px;
+    white-space: normal;
 }
 
 .stat-number {
@@ -742,6 +746,21 @@ body {
     height: 300px;
     z-index: 0;
     transform: translate(-50%, -50%) translateY(100px) rotateX(65deg);
+}
+
+
+.proxz-nav__orbit .proxz-nav__label {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.proxz-nav__orbit:hover .proxz-nav__label,
+.proxz-nav__orbit.selected .proxz-nav__label {
+    opacity: 1;
+}
+
+.proxz-nav__orbit.selected .proxz-nav__satellite:before {
+    opacity: 1;
 }
 
 .proxz-nav__orbit:before {
@@ -1036,11 +1055,13 @@ body {
 .highlight-text {
     color: rgba(255, 255, 255, 0.2);
     transition: color 1s ease; /* Increased from 0.5s to 1s */
+    word-spacing: normal;
 }
 
 .highlight-text span {
     display: inline-block;
-    transition: color 0.8s ease; /* Increased from 0.3s to 0.8s */
+    transition: color 3.5s ease; /* Increased from 0.3s to 0.8s */
+    margin-right: 0.25em;
 }
 
 
@@ -1092,3 +1113,116 @@ body {
 .card-update {
     animation: cardUpdate 0.5s ease;
 }
+
+
+
+/*contact page*/
+
+#contact {
+    position: relative;
+    padding-top: 150px; /* This will push the content down */
+}
+
+#contact h2 {
+    position: absolute;
+    left: 120px;
+    top: 170px; /* Adjusted to account for the padding-top */
+    font-size: 2.5em;
+    color: #6ef9d8;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.contact-form {
+    width: 40%;
+    padding: 20px;
+    margin-right: 90px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 60px; /* Increased from 30px to 60px for more spacing */
+    display: flex;
+    align-items: center;
+}
+
+/* Rest of the CSS remains the same */
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.input-label {
+    position: absolute;
+    top: 10px;
+    left: 30px; /* Adjust based on the width of your line */
+    font-size: 16px;
+    color: #6ef9d8;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.input-line {
+    width: 20px; /* Adjust the width of the lines */
+    height: 2px;
+    background: #444; /* Grey color for inactive state */
+    transition: background-color 0.5s;
+}
+
+.input-line.left {
+    margin-right: 10px;
+}
+
+.input-line.right {
+    margin-left: 10px;
+}
+
+.input-group input:focus ~ .input-label,
+.input-group input:valid ~ .input-label,
+.input-group textarea:focus ~ .input-label,
+.input-group textarea:valid ~ .input-label {
+    top: -20px;
+    left: 30px;
+    font-size: 12px;
+    color: #6ef9d8;
+}
+
+.input-group input:focus ~ .input-line,
+.input-group input:valid ~ .input-line,
+.input-group textarea:focus ~ .input-line,
+.input-group textarea:valid ~ .input-line {
+    background-color: #6ef9d8;
+}
+
+.send-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #6ef9d8;
+    background: transparent;
+    border: 2px solid #6ef9d8;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.send-button:hover {
+    background: #6ef9d8;
+    color: #000;
+}
+
+
+.page-section#contact {
+    position: relative;
+}
+
