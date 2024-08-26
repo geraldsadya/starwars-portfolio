@@ -18,6 +18,7 @@
         </filter>
       </svg>
 
+
     <div id="loading-screen" aria-label="Loading content, please wait.">
         <div id="light-pulse"></div>
         <div id="awakening-text">Awakening the Force...</div>
@@ -26,6 +27,7 @@
     <main id="app">
         
     </main>
+    
 
     <div class="begin-container">
         <button id="start-button" class="begin-button" aria-label="Start the website">START</button>
@@ -34,7 +36,7 @@
     <div class="video-container">
         <button id="skip-button" class="skip-button" aria-label="Skip the intro video">Skip</button>
         <video id="intro-video" muted aria-label="Introductory Star Wars video">
-            <source src="assets/StarWarsIntroVid2.mp4" type="video/mp4">
+            <source src="assets/StarWarsIntroVid.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
@@ -43,6 +45,17 @@
     <audio id="bg-music" loop aria-hidden="true">
         <source src="assets/Star Wars.mp3" type="audio/mpeg">
     </audio>
+
+    <audio id="hero-music" loop>
+        <source src="assets/HeroMusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="audio-control" class="audio-control">
+        <svg viewBox="0 0 100 50" class="audio-wave">
+          <path class="wave" d="M 0 25 Q 12.5 10, 25 25 T 50 25 T 75 25 T 100 25" />
+          <path class="wave" d="M 0 25 Q 12.5 40, 25 25 T 50 25 T 75 25 T 100 25" />
+        </svg>
+      </div>
 
     <canvas id="interactive-cursor" aria-hidden="true"></canvas>
     <canvas id="bg" aria-hidden="true"></canvas> <!-- Canvas for Three.js -->
@@ -82,16 +95,6 @@
     </div>
 
 
-    <div class="menu-container post-video-element">
-        <nav class="menu">
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
 
     <div id="slider-nav" class="post-video-element">
         <ul>
@@ -102,16 +105,9 @@
         </ul>
     </div>
 
-    <!-- Dynamic Stats Box -->
-    <div id="stats" style="display: none; position: fixed; bottom: 0; left: 5px; cursor: pointer; opacity: 0.9; z-index: 10000;">
-        <canvas id="stats-canvas" width="80" height="48" style="display: block;"></canvas>
-    </div>
-
-
-
     <!-- Sections -->
     <section id="hero" class="page-section">
-        <h3 class="animated-text top-text">
+        <h3 class="animated-text top-text hero-text">
             <span class="letter">I</span>
             <span class="letter"> </span>
             <span class="letter">A</span>
@@ -139,7 +135,7 @@
             <span class="letter">E</span>
             <span class="letter">.</span>
         </h3>
-        <h1 class="main-text top-text">
+        <h1 class="main-text top-text hero-text">
             <span class="letter">A</span>
             <span class="letter">R</span>
             <span class="letter">E</span>
@@ -149,29 +145,6 @@
             <span class="letter">U</span>
             <span class="letter">?</span>
         </h1>
-
-        <div class="animated-stats-container">
-            <!-- We only need one stat box -->
-            <div class="animated-stat-box">
-                <div class="stat-content">
-                    <div class="stat-description">MEDITATION  TIME</div>
-                    <div class="stat-number">936 hours</div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-description">JUMPSHOTS  MADE</div>
-                    <div class="stat-number">298 k</div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-description">DISTANCE  TRAVELLED</div>
-                    <div class="stat-number">25 parsecs</div>
-                </div>
-                <div class="stat-content">
-                    <div class="stat-description">PLANETS  SAVED</div>
-                    <div class="stat-number">2 planets</div>
-                </div>
-            </div>
-        </div>
-
 
     </section>
 
@@ -192,6 +165,7 @@
 
 
     <section id="work" class="page-section">
+        <h2 class="slide-up-text"> Missions</h2>
             <div class="proxz-nav">
                 <div class="proxz-nav__system">
                     <li class="proxz-nav__orbit">
@@ -248,7 +222,7 @@
 
 
     <section id="contact" class="page-section"> 
-        <h2 class="slide-up-text">Contact</h2>
+        <h2 class="slide-up-text">contact</h2>
         <div class="contact-container">
             <div class="contact-form">
                 <div class="input-group">

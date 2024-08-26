@@ -9,6 +9,30 @@ const video = document.getElementById('intro-video');
 const audio = document.getElementById('bg-music');
 const loadingScreen = document.getElementById('loading-screen');
 const pageSections = document.querySelectorAll('.page-section');
+const heroMusic = document.getElementById('hero-music');
+const audioControl = document.getElementById('audio-control');
+const heroSection = document.getElementById('hero');
+const awakeningText = document.querySelector('.main-text.top-text');
+
+let isMuted = false;
+
+function toggleAudio() {
+    if (isMuted) {
+      heroMusic.play();
+      audioControl.classList.remove('muted');
+    } else {
+      heroMusic.pause();
+      audioControl.classList.add('muted');
+    }
+    isMuted = !isMuted;
+  }
+  
+  audioControl.addEventListener('click', toggleAudio);
+  
+  // Initially hide the audio control
+  audioControl.style.display = 'none';
+  awakeningText.style.opacity = '0';
+
 
 // Add this function to your script.js
 
@@ -33,14 +57,29 @@ function applyEffect() {
 }
 
 window.addEventListener('load', function() {
+    hideHeroText();
+    hideAudioControl();
+
+    // Delay the start of animations slightly to ensure smooth rendering
+    setTimeout(() => {
+        startPulsatingAnimation();
+    }, 100);
+
     // Ensure the START button appears after the pulse effect ends
     setTimeout(() => {
         loadingScreen.style.display = 'none';
         beginContainer.style.display = 'flex';
         applyEffect(); // Apply the effect immediately when the button appears
         setInterval(applyEffect, 5000); // Repeat the effect every 5 seconds
-    }, 7000); // Show the START button after the pulse effect ends
+        startRippleAnimation();
+    }, 6900); // Show the START button after the pulse effect ends
 });
+
+function startRippleAnimation() {
+    mouseMoved = false;
+    setupCanvas();
+    update(0);
+}
 
 
 // Hide the page sections initially
@@ -48,13 +87,6 @@ pageSections.forEach(section => {
     section.style.display = 'none';
 });
 
-window.addEventListener('load', function() {
-    // Ensure the START button appears after the pulse effect ends
-    setTimeout(() => {
-        loadingScreen.style.display = 'none';
-        beginContainer.style.display = 'flex';
-    }, 7000); // Show the START button after the pulse effect ends
-});
 
 beginButton.addEventListener('click', () => {
     console.log('START button clicked');
@@ -64,7 +96,13 @@ beginButton.addEventListener('click', () => {
     audio.play().catch(error => {
         console.log('Audio play was prevented:', error);
     });
+
+    // Show audio control when video starts
+    audioControl.style.display = 'block';
+    audioControl.style.opacity = '1';
 });
+
+
 
 // Function to fade out audio
 function fadeOutAudio(audio, duration) {
@@ -87,76 +125,112 @@ function fadeOutAudio(audio, duration) {
 }
 
 // Function to handle the transition after the video ends
+// Function to handle the transition after the video ends
 function handleTransition() {
-  console.log('Video ended, transitioning now...');
+    console.log('Transitioning now...');
 
-  fadeOutAudio(audio, 3000); // Fade out audio over 3 seconds
+    // Immediately show black overlay with noise filter
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'black';
+    overlay.style.opacity = '1';
+    overlay.style.zIndex = '9998'; // Below the noise filter
+    document.body.appendChild(overlay);
 
-  // Fade out video more slowly
-  video.style.transition = 'opacity 3s ease';
-  video.style.opacity = 0;
+    // Fade out audio
+    fadeOutAudio(audio, 1000);
 
-  // Create a black overlay for smooth transition
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.backgroundColor = 'black';
-  overlay.style.opacity = '0';
-  overlay.style.transition = 'opacity 3s ease';
-  overlay.style.zIndex = '999';
-  document.body.appendChild(overlay);
+    // Hide video container
+    document.querySelector('.video-container').style.display = 'none';
 
-  setTimeout(() => {
-      overlay.style.opacity = '1';
-  }, 100);
+    // Prepare the new content behind the overlay
+    setTimeout(() => {
+        document.body.style.overflow = 'auto';
 
-  setTimeout(() => {
-      console.log('Video fade out complete, starting 3.js scene...');
-      document.querySelector('.video-container').style.display = 'none';
-      document.body.style.overflow = 'auto';
+        // Show the audio control
+        audioControl.style.display = 'block';
+        audioControl.style.opacity = '0';
 
-      // Show page sections after video ends
-      pageSections.forEach(section => {
-          section.style.display = 'block';
-          section.style.opacity = '0';
-          section.style.transition = 'opacity 2s ease';
-      });
+        // Prepare page sections
+        pageSections.forEach(section => {
+            section.style.display = 'block';
+            section.style.opacity = '0';
+        });
 
-      // Show post-video elements
-      document.querySelectorAll('.post-video-element').forEach(element => {
-          element.style.display = 'block';
-          element.style.opacity = '0';
-          element.style.transition = 'opacity 2s ease';
-      });
+        // Prepare post-video elements
+        document.querySelectorAll('.post-video-element').forEach(element => {
+            element.style.display = 'block';
+            element.style.opacity = '0';
+        });
 
-      startThreeJS();
+        // Defer the Three.js scene initialization
+        setTimeout(() => {
+            startThreeJS();
+        }, 500); // Delay the start of Three.js initialization by 500ms
 
-      // Fade in the content
-      setTimeout(() => {
-          overlay.style.opacity = '0';
-          pageSections.forEach(section => {
-              section.style.opacity = '1';
-          });
-          document.querySelectorAll('.post-video-element').forEach(element => {
-              element.style.opacity = '1';
-          });
-      }, 500);
+        // Start playing hero music
+        heroMusic.play().catch(error => {
+            console.log('Hero music play was prevented:', error);
+        });
 
-      // Remove the overlay after it fades out
-      setTimeout(() => {
-          overlay.remove();
-      }, 3500);
-  }, 3000);
+        // Fade out the overlay and fade in the content
+        setTimeout(() => {
+            overlay.style.transition = 'opacity 2.5s ease';  // Slightly longer fade-out duration
+            overlay.style.opacity = '0';
+
+            audioControl.style.transition = 'opacity 2.5s ease';
+            audioControl.style.opacity = '1';
+
+            pageSections.forEach(section => {
+                section.style.transition = 'opacity 2.5s ease';
+                section.style.opacity = '1';
+            });
+
+            document.querySelectorAll('.post-video-element').forEach(element => {
+                element.style.transition = 'opacity 2.5s ease';
+                element.style.opacity = '1';
+            });
+
+            // Show hero text
+            document.querySelectorAll('.hero-text').forEach(element => {
+                element.style.transition = 'opacity 2.5s ease, visibility 2.5s ease';
+                element.style.opacity = '1';
+                element.style.visibility = 'visible';
+            });
+
+            // Remove the overlay after it fades out
+            setTimeout(() => {
+                overlay.remove();
+            }, 2500); // Match the fade-out duration
+        }, 500); // Short delay to ensure everything is ready
+    }, 100); // Short delay to ensure overlay is visible
 }
 
 // Event listener for when the video ends
 video.addEventListener('ended', handleTransition);
 
+function hideHeroText() {
+    document.querySelectorAll('.hero-text').forEach(element => {
+        element.style.opacity = '0';
+        element.style.visibility = 'hidden';
+    });
+}
+
+function hideAudioControl() {
+    const audioControl = document.getElementById('audio-control');
+    audioControl.style.display = 'none';
+    audioControl.style.opacity = '0';
+}
+
 // Function to start the Three.js scene
+let threeJSInitialized = false;
 function startThreeJS() {
+    if (threeJSInitialized) return;
+    threeJSInitialized = true;
     console.log('Starting 3.js scene...');
 
     // Minimal Three.js setup
@@ -239,7 +313,6 @@ function startThreeJS() {
                 100;
         };
 
-
         function playScrollAnimations() {
             animationScripts.forEach((a) => {
                 if (scrollPercent >= a.start && scrollPercent < a.end) {
@@ -301,14 +374,7 @@ function startThreeJS() {
 }
 
 
-function animate() {
-    requestAnimationFrame(animate);
-    playScrollAnimations();
-    animateStars();
-    loadStormTrooper(); // Call the loadStormTrooper function here
-    controls.update();
-    renderer.render(scene, camera);
-}
+
 
 // Ensure the Three.js scene starts after the video ends
 startThreeJS();
@@ -343,7 +409,7 @@ function setupCanvas() {
 window.addEventListener("resize", setupCanvas);
 
 function update(t) {
-      if (!mouseMoved) {
+    if (!mouseMoved) {
         pointer.x = (.5 + .3 * Math.cos(.002 * t) * (Math.sin(.005 * t))) * window.innerWidth;
         pointer.y = (.5 + .2 * (Math.cos(.005 * t)) + .1 * Math.cos(.01 * t)) * window.innerHeight + window.scrollY;
     }
@@ -365,7 +431,7 @@ function update(t) {
         p.y += p.dy;
     });
 
-    ctx.strokeStyle = '#c7e9fd'; // Change the color here to blue
+    ctx.strokeStyle = '#c7e9fd';
     ctx.lineCap = "round";
     ctx.beginPath();
     ctx.moveTo(trail[0].x, trail[0].y);
@@ -396,8 +462,8 @@ window.addEventListener("touchmove", e => {
   updateMousePosition(e.targetTouches[0].clientX, e.targetTouches[0].clientY);
 });
 
-setupCanvas();
-update(0);
+//setupCanvas();
+//update(0);
 
 
 
@@ -433,6 +499,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const textBlocks = document.querySelectorAll('.page-section h3, .page-section h1');
@@ -482,50 +551,15 @@ document.addEventListener('DOMContentLoaded', function() {
   observer.observe(heroSection);
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const statContents = document.querySelectorAll('.stat-content');
-  let currentStatIndex = 0;
 
-  function showNextStat() {
-      // Hide the current stat
-      if (statContents[currentStatIndex]) {
-          statContents[currentStatIndex].classList.remove('active');
-      }
-
-      // Move to the next stat
-      currentStatIndex = (currentStatIndex + 1) % statContents.length;
-
-      // Show the new stat
-      const newStat = statContents[currentStatIndex];
-      newStat.classList.add('active');
-
-      // Animate the number
-      const numberElement = newStat.querySelector('.stat-number');
-      const numberText = numberElement.textContent;
-      numberElement.innerHTML = ''; // Clear the content
-      numberText.split('').forEach((char, index) => {
-          const span = document.createElement('span');
-          span.textContent = char;
-          span.style.transitionDelay = `${index * 0.05}s`; // Stagger the animation
-          numberElement.appendChild(span);
-      });
-
-      // Schedule the next animation
-      setTimeout(showNextStat, 7000); // Change stat every 7 seconds
-  }
-
-  // Initial setup: show the first stat
-  showNextStat();
-});
-
-
+// Skip button functionality
 const skipButton = document.getElementById('skip-button');
 
 skipButton.addEventListener('click', () => {
-  console.log('Skip button clicked');
-  video.pause();
-  handleTransition();
-});
+    console.log('Skip button clicked');
+    video.pause();
+    handleTransition();
+  });
 
 
 function animatePlanetarySystem() {
@@ -603,48 +637,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //card on work page
 document.addEventListener('DOMContentLoaded', () => {
-  const projectCard = document.querySelector('.project-card');
-  const orbits = document.querySelectorAll('.proxz-nav__orbit');
-
-  orbits.forEach(orbit => {
-      const satellite = orbit.querySelector('.proxz-nav__satellite');
+    const projectCard = document.querySelector('.project-card');
+    const orbits = document.querySelectorAll('.proxz-nav__orbit');
+  
+    function updateProjectCard(orbit) {
+      const projectName = orbit.querySelector('.proxz-nav__label').textContent;
+      const projectDescription = orbit.querySelector('.proxz-nav__description').textContent;
       
-      satellite.addEventListener('click', (e) => {
-          e.preventDefault();
-          
-          // Remove 'selected' class from all orbits
-          orbits.forEach(o => o.classList.remove('selected'));
-          
-          // Add 'selected' class to clicked orbit
-          orbit.classList.add('selected');
-          
-          const projectName = orbit.querySelector('.proxz-nav__label').textContent;
-          const projectDescription = orbit.querySelector('.proxz-nav__description').textContent;
-          
-          projectCard.innerHTML = `
-              <h2>${projectName}</h2>
-              <p>${projectDescription}</p>
-          `;
-
-          // Add animation class
-          projectCard.classList.add('card-update');
-          setTimeout(() => projectCard.classList.remove('card-update'), 500);
-      });
+      projectCard.innerHTML = `
+        <h2>${projectName}</h2>
+        <p>${projectDescription}</p>
+      `;
+  
+      // Add animation class
+      projectCard.classList.remove('card-update');
+      void projectCard.offsetWidth; // Trigger reflow
+      projectCard.classList.add('card-update');
+    }
+  
+    function handleOrbitInteraction(orbit, event) {
+      // Remove 'selected' class from all orbits
+      orbits.forEach(o => o.classList.remove('selected'));
       
-      // Optional: Remove 'selected' class when hovering over a different orbit
+      // Add 'selected' class to clicked orbit
+      orbit.classList.add('selected');
+      
+      // Update the project card
+      updateProjectCard(orbit);
+  
+      // Prevent default behavior and stop propagation
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  
+    orbits.forEach(orbit => {
+      // Use the entire orbit as the clickable area
+      orbit.addEventListener('click', (e) => handleOrbitInteraction(orbit, e));
+      
+      // Optional: Handle hover state
       orbit.addEventListener('mouseenter', () => {
-          if (!orbit.classList.contains('selected')) {
-              orbits.forEach(o => o.classList.remove('selected'));
-          }
+        if (!orbit.classList.contains('selected')) {
+          orbits.forEach(o => o.classList.remove('selected'));
+        }
       });
+    });
   });
-});
 
 //contact
 
 document.addEventListener('DOMContentLoaded', () => {
-  const contactHeading = document.querySelector('#contact .slide-up-text');
-  const contactForm = document.querySelector('.contact-form');
+  const contactHeading = document.querySelector('#transmissions .slide-up-text');
+  const contactForm = document.querySelector('.transmissions-form');
   
   const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -660,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }, { threshold: 0.1 });
 
-  observer.observe(document.querySelector('#contact'));
+  observer.observe(document.querySelector('#transmissions'));
 
   // Handle form submission
   document.getElementById('sendMessage').addEventListener('click', (e) => {
@@ -688,4 +731,3 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 });
-

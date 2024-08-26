@@ -20,12 +20,18 @@ body::after {
     opacity: 0.28;
     filter: url(#noise);
     z-index: 9998;
-  }
+}
 
-  .top-text {
+.top-text {
     position: relative;
     z-index: 9999; /* Higher than the noise effect */
 }
+
+
+
+
+
+
 
 /* Loading Screen */
 #loading-screen {
@@ -203,7 +209,7 @@ video {
 }
 
 
-/* Page Sections */
+/* About/The story page Sections */
 .page-section {
     display: none; /* Hide the sections initially */
     height: 100vh;
@@ -241,29 +247,8 @@ canvas#interactive-cursor {
 }
 
 
-/* Ripple Effect Styles */
-.ripple {
-    width: 10px;  /* 50% of the original 20px */
-    height: 10px; /* 50% of the original 20px */
-    background-color: rgba(199, 233, 253, 0.8); /* Light blue color */
-    border-radius: 50%;
-    position: absolute;
-    pointer-events: none;
-    animation: ripple-effect 0.6s ease-out forwards;
-    z-index: 9999; /* Ensure it's on top of everything except the cursor */
-}
 
-@keyframes ripple-effect {
-    to {
-        width: 100px;  /* 50% of the original 200px */
-        height: 100px; /* 50% of the original 200px */
-        opacity: 0;
-    }
-}
-
-/* Add this to the existing CSS */
-
-/* Begin Button */
+/* Begin/Start button */
 .begin-button > span:not(.sr-only) {
     position: relative;
     color: transparent;
@@ -285,17 +270,19 @@ canvas#interactive-cursor {
     80%  { content: var(--char-3); }
 }
 
-.begin-button.animate > span:not(.sr-only)::after {
-    animation: flash 2.5s steps(1, end);
-}
 
+
+
+
+
+/*Hero Gerald Header*/
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 60px; /* You can adjust the height as needed */
-    background-color: rgba(0, 0, 0, 0.8); /* Optional: makes header slightly transparent */
+    background-color: rgba(0, 0, 0, 1); /* Optional: makes header slightly transparent */
     z-index: 1000; /* Ensures the header stays on top of other content */
     box-sizing: border-box;
     display: flex;
@@ -304,18 +291,10 @@ header {
     padding: 10px 0;
 }
 
-#gsap-logo {
-    height: 100%; /* Make sure the logo container matches the header height */
-}
 
-body {
-    padding-top: 70px; /* Add top padding to body to ensure content is not hidden behind the fixed header */
-}
 
-.page-section {
-    padding: 20px;
-    margin-top: 20px; /* Add top margin to each section to ensure they start below the header */
-}
+
+
 
 #lines {
     position: fixed;
@@ -352,6 +331,7 @@ body {
 
 
 
+/*scroll mouse icon*/
 .mouse-icon {
     position: absolute;
     bottom: 100px;
@@ -402,7 +382,6 @@ body {
     }
 }
 
-
 .scroll-line {
     position: absolute;
     bottom: 50px;
@@ -427,7 +406,6 @@ body {
     }
 }
 
-
 .label {
     position: absolute;
     bottom: -3px; /* Aligns the bottom of the label with the bottom of the mouse icon */
@@ -439,6 +417,9 @@ body {
     white-space: nowrap;
 }
 
+
+
+/*slider nav bar*/
 #slider-nav {
     position: fixed;
     top: 50%;
@@ -486,11 +467,18 @@ body {
     transform-origin: top; /* Fill from top to bottom */
 }
 
+
+
+
 /* Hero Section Style */
 #hero {
+    opacity: 0;
     text-align: center;
-    padding: 100px 20px;
+    padding-top: 270px;
+    
     background-color: none;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .animated-text, .main-text {
@@ -540,141 +528,11 @@ body {
     }
 }
 
-.menu-icon {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1500;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 24px; /* Adjust the height of the menu icon */
-    width: 30px; /* Adjust the width of the menu icon */
-}
-
-.menu-icon .line {
-    height: 3px;
-    width: 100%;
-    background-color: #fff; /* White lines */
-}
-
-.menu-container {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Start off-screen */
-    height: 100vh;
-    width: 250px; /* Width of the sliding menu */
-    background-color: #000; /* Background of the menu */
-    transition: left 0.3s ease; /* Smooth transition for sliding in and out */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 1400;
-}
-
-.menu {
-    color: #fff;
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-    padding-left: 20px; /* Padding for the menu items */
-}
-
-.menu li a {
-    display: block;
-    padding: 10px 0;
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.menu li a:hover {
-    background-color: #333;
-}
 
 
 
 
 
-
-
-.animated-stats-container {
-    position: fixed;
-    left: 90px;
-    bottom: 50px;
-    width: 400px;
-    height: 220px; /* Increased from 100px to accommodate the higher text */
-    z-index: 10;
-}
-
-.animated-stat-box {
-    width: 100%;
-    height: 100%;
-    background-color: none(255, 0, 0, 0.2);
-    overflow: hidden;
-    position: relative;
-}
-
-.stat-content {
-    position: absolute;
-    bottom: -100%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 10px;
-    box-sizing: border-box;
-    transition: bottom 1s ease-out; /* Slowed down the transition */
-}
-
-.stat-description {
-    font-family: sans-serif;
-    width: 200px;
-    font-size: 9px;
-    color: #6ef9d8;
-    transform: rotate(-90deg) translateX(-100%) translateY(-100%);
-    transform-origin: left bottom;
-    position: absolute;
-    bottom: calc(90%); /* Increase this value to move it higher */
-    left: 30px; /* Align with the first character of the number */
-    white-space: normal;
-}
-
-.stat-number {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFFFFF;
-    position: relative;
-    overflow: hidden;
-}
-
-.stat-number span {
-    display: inline-block;
-    transform: translateY(100%);
-    opacity: 0;
-    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-}
-
-
-
-
-/* Active (visible) state PLANETARY SYSTEM*/
-.stat-content.active {
-    bottom: 0;
-}
-
-.stat-content.active .stat-number span {
-    transform: translateY(0);
-    opacity: 1;
-}
 
 .proxz-nav {
     transform-style: preserve-3d;
@@ -1002,7 +860,11 @@ body {
 
 
 
-  .page-section {
+
+
+
+/*about page or My story page*/
+.page-section {
     position: relative;
     height: 100vh;
     overflow: hidden;
@@ -1011,7 +873,8 @@ body {
 .slide-up-text {
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: opacity 4s ease, transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    font-size: 3em;
 }
 
 .slide-up-text.visible {
@@ -1030,9 +893,10 @@ body {
     padding-top: 100px; /* Add top padding to push content down */
 }
 
+
 #about h2 {
     position: absolute;
-    left: 120px; /* Adjust this value to position the heading to the right of the left line */
+    left: 150px; /* Adjust this value to position the heading to the right of the left line */
     top: 50px;
 }
 
@@ -1054,13 +918,13 @@ body {
 
 .highlight-text {
     color: rgba(255, 255, 255, 0.2);
-    transition: color 1s ease; /* Increased from 0.5s to 1s */
+    transition: color 5s ease; 
     word-spacing: normal;
 }
 
 .highlight-text span {
     display: inline-block;
-    transition: color 3.5s ease; /* Increased from 0.3s to 0.8s */
+    transition: color 4s ease; /* Increased from 0.3s to 0.8s */
     margin-right: 0.25em;
 }
 
@@ -1068,13 +932,7 @@ body {
 
 
 
-.work-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-}
-
+/*work/work page*/
 .proxz-nav {
     width: 60%;
 }
@@ -1114,34 +972,50 @@ body {
     animation: cardUpdate 0.5s ease;
 }
 
+#work h2.slide-up-text {
+    position: absolute;
+    left: 140px;
+    top: 50px;
+    font-size: 3em;
+    color: white;
+}
+
+#work {
+    padding-top: 150px; /* Push content down */
+}
 
 
-/*contact page*/
+
+
+
+/*contact/contact page*/
+#contact {
+    padding-top: 180px; /* Push content down */
+}
 
 #contact {
     position: relative;
-    padding-top: 150px; /* This will push the content down */
+    padding-top: 300px; /* This will push the content down */
 }
 
-#contact h2 {
+#contact h2.slide-up-text {
     position: absolute;
-    left: 120px;
-    top: 170px; /* Adjusted to account for the padding-top */
-    font-size: 2.5em;
-    color: #6ef9d8;
+    left: 140px;
+    top: 200px;
+    font-size: 3em;
+    color: white;
 }
 
 .contact-container {
     display: flex;
     justify-content: flex-end;
-    width: 100%;
+    width: 90%;
     height: 100%;
 }
 
 .contact-form {
-    width: 40%;
-    padding: 20px;
-    margin-right: 90px;
+    width: 30%;
+    margin-right: 120px;
 }
 
 .input-group {
@@ -1150,8 +1024,6 @@ body {
     display: flex;
     align-items: center;
 }
-
-/* Rest of the CSS remains the same */
 
 .input-group input,
 .input-group textarea {
@@ -1175,7 +1047,7 @@ body {
 }
 
 .input-line {
-    width: 20px; /* Adjust the width of the lines */
+    width: 30px; /* Adjust the width of the lines */
     height: 2px;
     background: #444; /* Grey color for inactive state */
     transition: background-color 0.5s;
@@ -1226,3 +1098,52 @@ body {
     position: relative;
 }
 
+
+
+/*audio button*/
+
+.audio-control {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+  .audio-wave {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .wave {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    transition: all 0.3s ease;
+  }
+  
+  .audio-control.muted .wave {
+    stroke-width: 1;
+    transform: scaleY(0.5);
+  }
+  
+  .audio-control:not(.muted) .wave:nth-child(1) {
+    animation: wave 1.5s ease-in-out infinite;
+  }
+  
+  .audio-control:not(.muted) .wave:nth-child(2) {
+    animation: wave 1.5s ease-in-out -0.4s infinite;
+  }
+  
+  @keyframes wave {
+    0%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(1.5);
+    }
+  }
