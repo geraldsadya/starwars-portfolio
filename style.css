@@ -4,7 +4,7 @@ body {
     padding: 0;
     overflow: hidden;
     background: black;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Baskervville SC', serif;
     cursor: url('assets/light-saber-cursor2.png'), auto;
 }
 
@@ -158,7 +158,7 @@ body::after {
     font-size: 24px;
     cursor: pointer;
     transition: color 0.3s ease;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Baskervville SC', serif;
 }
 
 .begin-button:hover {
@@ -193,7 +193,7 @@ video {
     padding: 10px 20px;
     cursor: pointer;
     z-index: 100; /* Ensure it appears on top of the video */
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Baskervville SC', serif;
     font-size: 14px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -415,6 +415,7 @@ header {
     font-size: 12px;
     color: #6ef9d8; /* Ensures the text is blue as previously set */
     white-space: nowrap;
+    font-family: 'Orbitron', sans-serif;
 }
 
 
@@ -870,6 +871,8 @@ header {
     overflow: hidden;
 }
 
+
+/*affects all slide up text*/
 .slide-up-text {
     opacity: 0;
     transform: translateY(50px);
@@ -918,13 +921,13 @@ header {
 
 .highlight-text {
     color: rgba(255, 255, 255, 0.2);
-    transition: color 5s ease; 
+    transition: color 3s ease; 
     word-spacing: normal;
 }
 
 .highlight-text span {
     display: inline-block;
-    transition: color 4s ease; /* Increased from 0.3s to 0.8s */
+    transition: color 3s ease; /* Increased from 0.3s to 0.8s */
     margin-right: 0.25em;
 }
 
@@ -948,7 +951,7 @@ header {
     border-radius: 10px;
     padding: 20px;
     color: #fff;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Inter', sans-serif;
     transition: all 0.5s ease;
 }
 
@@ -1001,7 +1004,7 @@ header {
 #contact h2.slide-up-text {
     position: absolute;
     left: 140px;
-    top: 200px;
+    top: 50px;
     font-size: 3em;
     color: white;
 }
@@ -1041,9 +1044,10 @@ header {
     top: 10px;
     left: 30px; /* Adjust based on the width of your line */
     font-size: 16px;
-    color: #6ef9d8;
+    color: #4c4d4d;
     pointer-events: none;
     transition: 0.5s;
+    font-family: 'Inter', sans-serif;
 }
 
 .input-line {
@@ -1079,13 +1083,15 @@ header {
 }
 
 .send-button {
-    padding: 10px 20px;
+    padding: 10px 40px;
     font-size: 16px;
     color: #6ef9d8;
     background: transparent;
     border: 2px solid #6ef9d8;
     cursor: pointer;
     transition: 0.5s;
+    width: 100%; /* Make the button take up the full width of its container */
+    max-width: 400px; /* Optionally, set a maximum width */
 }
 
 .send-button:hover {

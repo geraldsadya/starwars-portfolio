@@ -686,48 +686,24 @@ document.addEventListener('DOMContentLoaded', () => {
 //contact
 
 document.addEventListener('DOMContentLoaded', () => {
-  const contactHeading = document.querySelector('#transmissions .slide-up-text');
-  const contactForm = document.querySelector('.transmissions-form');
-  
-  const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              contactHeading.classList.add('visible');
-              contactForm.style.opacity = '1';
-              contactForm.style.transform = 'translateY(0)';
-          } else {
-              contactHeading.classList.remove('visible');
-              contactForm.style.opacity = '0';
-              contactForm.style.transform = 'translateY(50px)';
-          }
-      });
-  }, { threshold: 0.1 });
+    const inputs = document.querySelectorAll('.input-group input, .input-group textarea');
 
-  observer.observe(document.querySelector('#transmissions'));
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            const leftLine = input.closest('.input-group').querySelector('.input-line.left');
+            const rightLine = input.closest('.input-group').querySelector('.input-line.right');
+            leftLine.style.backgroundColor = '#6ef9d8';
+            rightLine.style.backgroundColor = '#6ef9d8';
+        });
 
-  // Handle form submission
-  document.getElementById('sendMessage').addEventListener('click', (e) => {
-      e.preventDefault();
-      // Add your form submission logic here
-      console.log('Form submitted');
-  });
-
-  // Add focus and blur event listeners to inputs
-  const inputs = document.querySelectorAll('.input-group input, .input-group textarea');
-  inputs.forEach(input => {
-      input.addEventListener('focus', () => {
-          const leftLine = input.previousElementSibling;
-          const rightLine = input.nextElementSibling.nextElementSibling;
-          leftLine.style.backgroundColor = '#6ef9d8';
-          rightLine.style.backgroundColor = '#6ef9d8';
-      });
-      input.addEventListener('blur', () => {
-          if (!input.value) {
-              const leftLine = input.previousElementSibling;
-              const rightLine = input.nextElementSibling.nextElementSibling;
-              leftLine.style.backgroundColor = '#444';
-              rightLine.style.backgroundColor = '#444';
-          }
-      });
-  });
+        input.addEventListener('blur', () => {
+            if (!input.value) {
+                const leftLine = input.closest('.input-group').querySelector('.input-line.left');
+                const rightLine = input.closest('.input-group').querySelector('.input-line.right');
+                leftLine.style.backgroundColor = '#444';
+                rightLine.style.backgroundColor = '#444';
+            }
+        });
+    });
 });
+
