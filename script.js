@@ -687,6 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const inputs = document.querySelectorAll('.input-group input, .input-group textarea');
+    const sendButton = document.getElementById('sendMessage');
 
     inputs.forEach(input => {
         input.addEventListener('focus', () => {
@@ -705,5 +706,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
 
+    sendButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const message = document.getElementById('message');
+
+        if (fullName.value && email.value && message.value && isValidEmail(email.value)) {
+            showMessage('Message sent successfully!', 'success');
+        } else {
+            showMessage('Please fill all fields correctly.', 'error');
+        }
+    });
+
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function showMessage(message, type) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        messageElement.style.position = 'fixed';
+        messageElement.style.top = '20px';
+        messageElement.style.left = '50%';
+        messageElement.style.transform = 'translateX(-50%)';
+        messageElement.style.padding = '10px 20px';
+        messageElement.style.borderRadius = '5px';
+        messageElement.style.color = '#fff';
+        messageElement.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+        messageElement.style.zIndex = '1000';
+
+        document.body.appendChild(messageElement);
+
+        setTimeout(() => {
+            messageElement.remove();
+        }, 3000);
+    }
+});
