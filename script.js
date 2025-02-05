@@ -38,9 +38,12 @@ function toggleAudio() {
 
 const GLYPHS = 'ラドクリフマラソンわたしワタシんょンョたばこタバコとうきょうトウキョウ0123456789±!@#$%^&*()_+ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+const startPhrases = ["CLICK", "TO", "START"];
+let phraseIndex = 0;
+
 function applyEffect() {
-    const text = 'START';
-    const speed = 5;
+    let text = startPhrases[phraseIndex];
+    phraseIndex = (phraseIndex + 1) % startPhrases.length;
 
     beginButton.innerHTML = text.split('').map((char, index) =>
         `<span data-char="${char}"
@@ -53,8 +56,17 @@ function applyEffect() {
 
     setTimeout(() => {
         beginButton.classList.remove('animate');
-    }, speed * 1000);
+    }, 1200);
 }
+
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        beginContainer.style.display = 'flex';
+        applyEffect(); // Apply the effect immediately when the button appears
+        setInterval(applyEffect, 2000); // Repeat effect every 2 seconds
+    }, 6900);
+});
 
 window.addEventListener('load', function() {
     hideHeroText();
