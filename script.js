@@ -137,7 +137,6 @@ function fadeOutAudio(audio, duration) {
 }
 
 // Function to handle the transition after the video ends
-// Function to handle the transition after the video ends
 function handleTransition() {
     console.log('Transitioning now...');
 
@@ -179,11 +178,6 @@ function handleTransition() {
             element.style.opacity = '0';
         });
 
-        // Defer the Three.js scene initialization
-        setTimeout(() => {
-            startThreeJS();
-        }, 500); // Delay the start of Three.js initialization by 500ms
-
         // Start playing hero music
         heroMusic.play().catch(error => {
             console.log('Hero music play was prevented:', error);
@@ -213,6 +207,11 @@ function handleTransition() {
                 element.style.opacity = '1';
                 element.style.visibility = 'visible';
             });
+
+            // Initialize Three.js scene after the transition is complete
+            setTimeout(() => {
+                startThreeJS();
+            }, 2500); // Match the fade-out duration
 
             // Remove the overlay after it fades out
             setTimeout(() => {
