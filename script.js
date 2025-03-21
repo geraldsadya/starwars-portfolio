@@ -387,9 +387,6 @@ function startThreeJS() {
 
 
 
-// Ensure the Three.js scene starts after the video ends
-startThreeJS();
-
 // Ripple effect for the cursor
 // New canvas interaction for cursor effect
 const canvas = document.getElementById('interactive-cursor');
@@ -472,9 +469,6 @@ window.addEventListener("touchmove", e => {
   mouseMoved = true;
   updateMousePosition(e.targetTouches[0].clientX, e.targetTouches[0].clientY);
 });
-
-//setupCanvas();
-//update(0);
 
 
 
