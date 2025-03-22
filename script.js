@@ -5,8 +5,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // Your existing code for handling the start button, video, and audio
 const beginButton = document.querySelector('.begin-button');
 const beginContainer = document.querySelector('.begin-container');
-const video = document.getElementById('intro-video');
-const audio = document.getElementById('bg-music');
 const loadingScreen = document.getElementById('loading-screen');
 const pageSections = document.querySelectorAll('.page-section');
 const heroMusic = document.getElementById('hero-music');
@@ -103,15 +101,80 @@ pageSections.forEach(section => {
 beginButton.addEventListener('click', () => {
     console.log('START button clicked');
     beginContainer.style.display = 'none';
-    document.querySelector('.video-container').style.display = 'block';
-    video.play();
-    audio.play().catch(error => {
-        console.log('Audio play was prevented:', error);
-    });
+    
+    // Immediately show black overlay with noise filter
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'black';
+    overlay.style.opacity = '1';
+    overlay.style.zIndex = '9998';
+    document.body.appendChild(overlay);
 
-    // Show audio control when video starts
-    audioControl.style.display = 'block';
-    audioControl.style.opacity = '1';
+    // Prepare the new content behind the overlay
+    setTimeout(() => {
+        document.body.style.overflow = 'auto';
+
+        // Show the audio control
+        audioControl.style.display = 'block';
+        audioControl.style.opacity = '0';
+
+        // Prepare page sections
+        pageSections.forEach(section => {
+            section.style.display = 'block';
+            section.style.opacity = '0';
+        });
+
+        // Prepare post-video elements
+        document.querySelectorAll('.post-video-element').forEach(element => {
+            element.style.display = 'block';
+            element.style.opacity = '0';
+        });
+
+        // Start playing hero music
+        heroMusic.play().catch(error => {
+            console.log('Hero music play was prevented:', error);
+        });
+
+        // Fade out the overlay and fade in the content
+        setTimeout(() => {
+            overlay.style.transition = 'opacity 2.5s ease';
+            overlay.style.opacity = '0';
+
+            audioControl.style.transition = 'opacity 2.5s ease';
+            audioControl.style.opacity = '1';
+
+            pageSections.forEach(section => {
+                section.style.transition = 'opacity 2.5s ease';
+                section.style.opacity = '1';
+            });
+
+            document.querySelectorAll('.post-video-element').forEach(element => {
+                element.style.transition = 'opacity 2.5s ease';
+                element.style.opacity = '1';
+            });
+
+            // Show hero text
+            document.querySelectorAll('.hero-text').forEach(element => {
+                element.style.transition = 'opacity 2.5s ease, visibility 2.5s ease';
+                element.style.opacity = '1';
+                element.style.visibility = 'visible';
+            });
+
+            // Initialize Three.js scene after the transition is complete
+            setTimeout(() => {
+                startThreeJS();
+            }, 2500);
+
+            // Remove the overlay after it fades out
+            setTimeout(() => {
+                overlay.remove();
+            }, 2500);
+        }, 500);
+    }, 100);
 });
 
 
@@ -557,43 +620,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Skip button functionality
-const skipButton = document.getElementById('skip-button');
-
-skipButton.addEventListener('click', () => {
-    console.log('Skip button clicked');
-    video.pause();
-    handleTransition();
-  });
-
-
-function animatePlanetarySystem() {
-  const orbits = document.querySelectorAll('.proxz-nav__orbit');
-  orbits.forEach((orbit, index) => {
-      const satellite = orbit.querySelector('.proxz-nav__satellite');
-      const label = orbit.querySelector('.proxz-nav__label');
-      
-      // Set different animation durations for each orbit
-      const duration = 38 - (index * 2); // 38s, 36s, 34s, ...
-      
-      satellite.style.animationDuration = `${duration}s`;
-      label.style.animationDuration = `${duration}s`;
-      
-      // Set different colors for each orbit
-      const hue = 150 + (index * 30); // Different hue for each orbit
-      const color = `hsl(${hue}, 100%, 70%)`;
-      
-      satellite.style.setProperty('--orbit-color', color);
-      label.style.color = color;
-      
-      // Leave the project description as it is in the HTML
-  });
-}
-
-// Call this function after the DOM is loaded
-document.addEventListener('DOMContentLoaded', animatePlanetarySystem);
-
-
 //about animation
 document.addEventListener('DOMContentLoaded', () => {
   const observer = new IntersectionObserver((entries) => {
@@ -750,3 +776,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 });
+
+function animatePlanetarySystem() {
+  const orbits = document.querySelectorAll('.proxz-nav__orbit');
+  orbits.forEach((orbit, index) => {
+      const satellite = orbit.querySelector('.proxz-nav__satellite');
+      const label = orbit.querySelector('.proxz-nav__label');
+      
+      // Set different animation durations for each orbit
+      const duration = 38 - (index * 2); // 38s, 36s, 34s, ...
+      
+      satellite.style.animationDuration = `${duration}s`;
+      label.style.animationDuration = `${duration}s`;
+      
+      // Set different colors for each orbit
+      const hue = 150 + (index * 30); // Different hue for each orbit
+      const color = `hsl(${hue}, 100%, 70%)`;
+      
+      satellite.style.setProperty('--orbit-color', color);
+      label.style.color = color;
+      
+      // Leave the project description as it is in the HTML
+  });
+}
+
+// Call this function after the DOM is loaded
+document.addEventListener('DOMContentLoaded', animatePlanetarySystem);
