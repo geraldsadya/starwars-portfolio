@@ -12,31 +12,25 @@
     <script type="module" src="script.js" defer></script>
 </head>
 <body>
-
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <filter id="noise">
           <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
           <feColorMatrix type="saturate" values="0"/>
         </filter>
-      </svg>
-
+    </svg>
 
     <div id="loading-screen" aria-label="Loading content, please wait.">
         <div id="light-pulse"></div>
         <div id="awakening-text">Awakening The Force...</div>
     </div>
 
-    <main id="app">
-        
-    </main>
+    <main id="app"></main>
     
-
     <div class="begin-container">
         <button id="start-button" class="begin-button" aria-label="Start the website">START</button>
     </div>
 
-    <!-- Removed video container section -->
-
+    <!-- Audio elements -->
     <audio id="bg-music" loop aria-hidden="true">
         <source src="assets/Star Wars.mp3" type="audio/mpeg">
     </audio>
@@ -50,7 +44,7 @@
           <path class="wave" d="M 0 25 Q 12.5 10, 25 25 T 50 25 T 75 25 T 100 25" />
           <path class="wave" d="M 0 25 Q 12.5 40, 25 25 T 50 25 T 75 25 T 100 25" />
         </svg>
-      </div>
+    </div>
 
     <canvas id="interactive-cursor" aria-hidden="true"></canvas>
     <canvas id="bg" aria-hidden="true"></canvas> <!-- Canvas for Three.js -->
@@ -62,7 +56,6 @@
             </div>
         </div>
     </header>
-
 
     <div id="lines" class="post-video-element">
         <div class="left-line line"></div>
@@ -82,8 +75,6 @@
             <span style="transform: translate3d(0px, 40px, 0px);"><span></span></span>
         </span>
     </div>
-
-
 
     <div id="slider-nav" class="post-video-element">
         <ul>
@@ -134,7 +125,6 @@
             <span class="letter">U</span>
             <span class="letter">?</span>
         </h1>
-
     </section>
 
     <section id="about" class="page-section">
@@ -150,9 +140,6 @@
         </div>
     </section>
     
-    
-
-
     <section id="work" class="page-section">
         <h2 class="slide-up-text"> Missions</h2>
             <div class="proxz-nav">
@@ -208,8 +195,6 @@
             </div>
     </section>
 
-
-
     <section id="contact" class="page-section"> 
         <h2 class="slide-up-text">Transmissions</h2>
         <div class="contact-container">
@@ -239,4 +224,3 @@
     </section>
 </body>
 </html>
-
