@@ -119,16 +119,6 @@ body {
   left: 100%;
 }
 
-/* Video container - removed but keeping the style with display:none */
-.video-container {
-  display: none;
-}
-
-/* Skip button - removed but keeping the style with display:none */
-.skip-button {
-  display: none;
-}
-
 /* Main content */
 #app {
   position: relative;
