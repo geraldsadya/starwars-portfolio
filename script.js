@@ -2,16 +2,16 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 
-// Your existing code for handling the start button and audio
+// DOM elements
 const beginButton = document.querySelector(".begin-button")
 const beginContainer = document.querySelector(".begin-container")
 const loadingScreen = document.getElementById("loading-screen")
 const pageSections = document.querySelectorAll(".page-section")
 const heroMusic = document.getElementById("hero-music")
 const audioControl = document.getElementById("audio-control")
-const heroSection = document.getElementById("hero")
 const awakeningText = document.querySelector(".main-text.top-text")
 
+// Audio control
 let isMuted = false
 
 function toggleAudio() {
@@ -29,10 +29,11 @@ audioControl.addEventListener("click", toggleAudio)
 
 // Initially hide the audio control
 audioControl.style.display = "none"
-awakeningText.style.opacity = "0"
+if (awakeningText) {
+  awakeningText.style.opacity = "0"
+}
 
-// Add this function to your script.js
-
+// Start button glitch effect
 const GLYPHS =
   "ラドクリフマラソンわたしワタシんょンョたばこタバコとうきょうトウキョウ0123456789±!@#$%^&*()_+ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -48,9 +49,9 @@ function applyEffect() {
     .map(
       (char, index) =>
         `<span data-char="${char}"
-        style="--index: ${index}; --char-1: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-2: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-3: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}';">
-        ${char}
-        </span>`,
+    style="--index: ${index}; --char-1: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-2: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}'; --char-3: '${GLYPHS[Math.floor(Math.random() * GLYPHS.length)]}';">
+    ${char}
+    </span>`,
     )
     .join("")
 
@@ -61,6 +62,7 @@ function applyEffect() {
   }, 1200)
 }
 
+// Initial loading and setup
 window.addEventListener("load", () => {
   setTimeout(() => {
     loadingScreen.style.display = "none"
@@ -68,46 +70,31 @@ window.addEventListener("load", () => {
     applyEffect() // Apply the effect immediately when the button appears
     setInterval(applyEffect, 2000) // Repeat effect every 2 seconds
   }, 6900)
-})
 
-const startPulsatingAnimation = () => {} // Define startPulsatingAnimation as an empty function
-
-window.addEventListener("load", () => {
   hideHeroText()
   hideAudioControl()
 
-  // Delay the start of animations slightly to ensure smooth rendering
-  setTimeout(() => {
-    startPulsatingAnimation()
-  }, 100)
-
-  // Ensure the START button appears after the pulse effect ends
+  // Ensure the START button appears after the loading screen
   setTimeout(() => {
     loadingScreen.style.display = "none"
     beginContainer.style.display = "flex"
     applyEffect() // Apply the effect immediately when the button appears
     setInterval(applyEffect, 5000) // Repeat the effect every 5 seconds
     startRippleAnimation()
-  }, 6900) // Show the START button after the pulse effect ends
+  }, 6900)
 })
-
-function startRippleAnimation() {
-  mouseMoved = false
-  setupCanvas()
-  update(0)
-}
 
 // Hide the page sections initially
 pageSections.forEach((section) => {
   section.style.display = "none"
 })
 
-// MODIFIED: Direct transition from start button to main content
+// DIRECT TRANSITION: Start button click handler
 beginButton.addEventListener("click", () => {
   console.log("START button clicked")
   beginContainer.style.display = "none"
 
-  // Immediately show black overlay with noise filter
+  // Show black overlay with noise filter
   const overlay = document.createElement("div")
   overlay.style.position = "fixed"
   overlay.style.top = "0"
@@ -119,7 +106,7 @@ beginButton.addEventListener("click", () => {
   overlay.style.zIndex = "9998"
   document.body.appendChild(overlay)
 
-  // Prepare the new content behind the overlay
+  // Prepare the main content behind the overlay
   setTimeout(() => {
     document.body.style.overflow = "auto"
 
@@ -182,26 +169,7 @@ beginButton.addEventListener("click", () => {
   }, 100)
 })
 
-// Function to fade out audio (keeping this for other uses)
-function fadeOutAudio(audio, duration) {
-  console.log("Fading out audio...")
-  let volume = audio.volume
-  const step = volume / (duration / 50)
-
-  const fadeAudio = setInterval(() => {
-    if (volume > 0) {
-      volume -= step
-      if (volume < 0) volume = 0
-      audio.volume = volume
-    } else {
-      clearInterval(fadeAudio)
-      audio.pause()
-      audio.currentTime = 0 // Reset the audio
-      console.log("Audio fade out complete.")
-    }
-  }, 50)
-}
-
+// Helper functions
 function hideHeroText() {
   document.querySelectorAll(".hero-text").forEach((element) => {
     element.style.opacity = "0"
@@ -210,12 +178,11 @@ function hideHeroText() {
 }
 
 function hideAudioControl() {
-  const audioControl = document.getElementById("audio-control")
   audioControl.style.display = "none"
   audioControl.style.opacity = "0"
 }
 
-// Function to start the Three.js scene
+// Three.js scene
 let threeJSInitialized = false
 function startThreeJS() {
   if (threeJSInitialized) return
@@ -362,7 +329,6 @@ function startThreeJS() {
 }
 
 // Ripple effect for the cursor
-// New canvas interaction for cursor effect
 const canvas = document.getElementById("interactive-cursor")
 const ctx = canvas.getContext("2d")
 let mouseMoved = false
@@ -432,7 +398,11 @@ function update(t) {
   window.requestAnimationFrame(update)
 }
 
-window.addEventListener("resize", setupCanvas)
+function startRippleAnimation() {
+  mouseMoved = false
+  setupCanvas()
+  update(0)
+}
 
 window.addEventListener("mousemove", (e) => {
   mouseMoved = true
@@ -444,6 +414,7 @@ window.addEventListener("touchmove", (e) => {
   updateMousePosition(e.targetTouches[0].clientX, e.targetTouches[0].clientY)
 })
 
+// Navigation
 document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelectorAll("#slider-nav .nav-link")
   function setActiveLink() {
@@ -477,6 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
+// Text animations
 document.addEventListener("DOMContentLoaded", () => {
   const textBlocks = document.querySelectorAll(".page-section h3, .page-section h1")
   const heroSection = document.querySelector("#hero")
@@ -528,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(heroSection)
 })
 
-//about animation
+// About section animations
 document.addEventListener("DOMContentLoaded", () => {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -576,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 })
 
-//card on work page
+// Work section - project cards
 document.addEventListener("DOMContentLoaded", () => {
   const projectCard = document.querySelector(".project-card")
   const orbits = document.querySelectorAll(".proxz-nav__orbit")
@@ -586,9 +558,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const projectDescription = orbit.querySelector(".proxz-nav__description").textContent
 
     projectCard.innerHTML = `
-        <h2>${projectName}</h2>
-        <p>${projectDescription}</p>
-      `
+      <h2>${projectName}</h2>
+      <p>${projectDescription}</p>
+    `
 
     // Add animation class
     projectCard.classList.remove("card-update")
@@ -624,8 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-//contact
-
+// Contact form
 document.addEventListener("DOMContentLoaded", () => {
   const inputs = document.querySelectorAll(".input-group input, .input-group textarea")
   const sendButton = document.getElementById("sendMessage")
@@ -687,6 +658,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 })
 
+// Planetary system animation
 function animatePlanetarySystem() {
   const orbits = document.querySelectorAll(".proxz-nav__orbit")
   orbits.forEach((orbit, index) => {
