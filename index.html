@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerald Sadya's portfolio website showcasing projects and skills in web development.">
+    <title>Gerald Sadya's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js" defer></script>
+</head>
+<body>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <filter id="noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+      </svg>
+
+
+    <div id="loading-screen" aria-label="Loading content, please wait.">
+        <div id="light-pulse"></div>
+        <div id="awakening-text">Awakening The Force...</div>
+    </div>
+
+    <main id="app">
+        
+    </main>
+    
+
+    <div class="begin-container">
+        <button id="start-button" class="begin-button" aria-label="Start the website">START</button>
+    </div>
+
+    <div class="video-container">
+        <button id="skip-button" class="skip-button" aria-label="Skip the intro video">Skip Intro</button>
+        <video id="intro-video" muted aria-label="Introductory Star Wars video">
+            <source src="assets/StarWarsIntroVid.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+
+    <audio id="bg-music" loop aria-hidden="true">
+        <source src="assets/Star Wars.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="hero-music" loop>
+        <source src="assets/HeroMusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="audio-control" class="audio-control">
+        <svg viewBox="0 0 100 50" class="audio-wave">
+          <path class="wave" d="M 0 25 Q 12.5 10, 25 25 T 50 25 T 75 25 T 100 25" />
+          <path class="wave" d="M 0 25 Q 12.5 40, 25 25 T 50 25 T 75 25 T 100 25" />
+        </svg>
+      </div>
+
+    <canvas id="interactive-cursor" aria-hidden="true"></canvas>
+    <canvas id="bg" aria-hidden="true"></canvas> <!-- Canvas for Three.js -->
+
+
+
+
+
+
+
+    <header class="post-video-element">
+        <div id="gsap-logo" style="position: relative; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <div id="logo">
+                <img src="assets/file3.png" alt="Hero Image" style="width: 126px; height: 18px;">
+            </div>
+        </div>
+    </header>
+
+
+    <div id="lines" class="post-video-element">
+        <div class="left-line line"></div>
+        <div class="middle-line line"></div>
+        <div class="right-line line"></div>
+    </div>
+
+    <div id="middle-line line" class="post-video-element">
+        <span class="mouse-icon">
+            <span class="gsap" style="opacity: 1; transform: translate3d(0px, 0px, 0px);">
+                <span class="border"></span>
+                <span class="point" style="opacity: 0.0602363; transform: translate3d(0px, 6.99859px, 0px);"><span></span></span>
+                <span class="label"><span class="font-reg">Scroll</span></span>
+            </span>
+        </span>
+        <span class="scroll-line">
+            <span style="transform: translate3d(0px, 40px, 0px);"><span></span></span>
+        </span>
+    </div>
+
+
+
+    <div id="slider-nav" class="post-video-element">
+        <ul>
+            <li><a href="#hero" class="nav-link"></a></li>
+            <li><a href="#about" class="nav-link"></a></li>
+            <li><a href="#work" class="nav-link"></a></li>
+            <li><a href="#contact" class="nav-link"></a></li>
+        </ul>
+    </div>
+
+    <!-- Sections -->
+    <section id="hero" class="page-section">
+        <h3 class="animated-text top-text hero-text">
+            <span class="letter">I</span>
+            <span class="letter"> </span>
+            <span class="letter">A</span>
+            <span class="letter">M</span>
+            <span class="letter"> </span>
+            <span class="letter">R</span>
+            <span class="letter">E</span>
+            <span class="letter">A</span>
+            <span class="letter">D</span>
+            <span class="letter">Y</span>
+            <span class="letter"> </span>
+            <span class="letter">F</span>
+            <span class="letter">O</span>
+            <span class="letter">R</span>
+            <span class="letter"> </span>
+            <span class="letter">T</span>
+            <span class="letter">H</span>
+            <span class="letter">E</span>
+            <span class="letter"> </span>
+            <span class="letter">F</span>
+            <span class="letter">U</span>
+            <span class="letter">T</span>
+            <span class="letter">U</span>
+            <span class="letter">R</span>
+            <span class="letter">E</span>
+            <span class="letter">.</span>
+        </h3>
+        <h1 class="main-text top-text hero-text">
+            <span class="letter">A</span>
+            <span class="letter">R</span>
+            <span class="letter">E</span>
+            <span class="letter"> </span>
+            <span class="letter">Y</span>
+            <span class="letter">O</span>
+            <span class="letter">U</span>
+            <span class="letter">?</span>
+        </h1>
+
+    </section>
+
+    <section id="about" class="page-section">
+        <h2 class="slide-up-text">My Story</h2>
+        <div class="text-container top-left">
+            <p class="highlight-text">It was foretold in the ancient scrolls that one would rise, a master of code, destined to bring balance to the digital realms. With a mind sharper than a lightsaber and a wit quicker than the Millennium Falcon, the journey began in a galaxy not so far away.</p>
+        </div>
+        <div class="text-container center">
+            <p class="highlight-text">Whispers of this one's prowess spread across the stars, crafting experiences that made the holocrons glow with envy. Legends spoke of impossible feats: code that defied logic, designs that bent reality, and innovations that left even the Sith in awe.</p>
+        </div>
+        <div class="text-container bottom-right">
+            <p class="highlight-text">And now, as the prophecy nears its fulfillment, the mission remains clear: to forge paths unknown, to challenge the impossible, and to ensure that in the battle between creativity and conformity, creativity reigns supreme. The force is strong with this one.</p>
+        </div>
+    </section>
+    
+    
+
+
+    <section id="work" class="page-section">
+        <h2 class="slide-up-text"> Missions</h2>
+            <div class="proxz-nav">
+                <div class="proxz-nav__system">
+                    <li class="proxz-nav__orbit">
+                        <a class="proxz-nav__satellite" href="#">
+                            <span class="proxz-nav__label">Project 1
+                                <span class="proxz-nav__description">Comprehensive RESTful API for Digital Bookstore Management</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="proxz-nav__orbit">
+                        <a class="proxz-nav__satellite" href="#">
+                            <span class="proxz-nav__label">Project 2
+                                <span class="proxz-nav__description">AI-Driven Content Personalization System for Media Streaming</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="proxz-nav__orbit">
+                        <a class="proxz-nav__satellite" href="#">
+                            <span class="proxz-nav__label">Project 3
+                                <span class="proxz-nav__description">Dynamic Single-Page Application for Business Solution</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="proxz-nav__orbit">
+                        <a class="proxz-nav__satellite" href="#">
+                            <span class="proxz-nav__label">Project 4
+                                <span class="proxz-nav__description">Serverless Image Processing and Data Transformation Platform on AWS</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="proxz-nav__orbit">
+                        <a class="proxz-nav__satellite" href="#">
+                            <span class="proxz-nav__label">Project 5
+                                <span class="proxz-nav__description">Interactive Portfolio Website with 3D Animations</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="proxz-nav__orbit">
+                        <a class="proxz-nav__satellite" href="#">
+                            <span class="proxz-nav__label">Project 6
+                                <span class="proxz-nav__description">Personal Blog Application with Admin Panel</span>
+                            </span>
+                        </a>
+                    </li>
+                </div>
+                <div class="hologram"></div>
+            </div>
+            <div class="project-card">
+                <h1 class="textGlow animated">Hover & Click</h1>
+                <p class="textGlow animated">Hover over a planet and click to see project details.</p>
+            </div>
+    </section>
+
+
+
+    <section id="contact" class="page-section"> 
+        <h2 class="slide-up-text">Transmissions</h2>
+        <div class="contact-container">
+            <div class="contact-form">
+                <div class="input-group">
+                    <span class="input-line left"></span>
+                    <input type="text" id="fullName" required>
+                    <span class="input-label">FULL NAME*</span>
+                    <span class="input-line right"></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-line left"></span>
+                    <input type="email" id="email" required>
+                    <span class="input-label">YOUR EMAIL*</span>
+                    <span class="input-line right"></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-line left"></span>
+                    <textarea id="message" required></textarea>
+                    <span class="input-label">MESSAGE*</span>
+                    <span class="input-line right"></span>
+                </div>
+                <button id="sendMessage" class="send-button">SEND MESSAGE</button>
+            </div>
+        </div>
+        <div id="stormtrooper-container"></div>
+    </section>
+</body>
+</html>
