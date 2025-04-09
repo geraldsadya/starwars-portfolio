@@ -953,6 +953,7 @@ header {
     color: #fff;
     font-family: 'Inter', sans-serif;
     transition: all 0.5s ease;
+    overflow-y: auto;
 }
 
 .project-card h2 {
@@ -960,9 +961,80 @@ header {
     margin-bottom: 10px;
 }
 
+.project-card h3 {
+    color: #6ef9d8;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.project-card h4 {
+    color: #6ef9d8;
+    margin: 15px 0 10px;
+    font-size: 16px;
+}
+
 .project-card p {
     font-size: 14px;
     line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.project-card ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.project-card li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.project-card li:before {
+    content: "•";
+    color: #6ef9d8;
+    position: absolute;
+    left: 0;
+}
+
+.launch-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6ef9d8;
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.launch-button:hover {
+    background-color: #4fd8b0;
+    transform: translateY(-2px);
+}
+
+.project-description {
+    margin-top: 15px;
+}
+
+.project-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.project-card::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 4px;
+}
+
+.project-card::-webkit-scrollbar-thumb {
+    background: #6ef9d8;
+    border-radius: 4px;
+}
+
+.project-card::-webkit-scrollbar-thumb:hover {
+    background: #4fd8b0;
 }
 
 @keyframes cardUpdate {
