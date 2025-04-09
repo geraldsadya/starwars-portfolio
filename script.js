@@ -649,10 +649,152 @@ document.addEventListener('DOMContentLoaded', () => {
       const projectName = orbit.querySelector('.proxz-nav__label').textContent;
       const projectDescription = orbit.querySelector('.proxz-nav__description').textContent;
       
-      projectCard.innerHTML = `
-        <h2>${projectName}</h2>
-        <p>${projectDescription}</p>
-      `;
+      if (projectName.includes('Project 1')) {
+        projectCard.innerHTML = `
+          <h2>Project 1: Digital Bookstore API</h2>
+          <h3>Comprehensive RESTful API for Digital Bookstore Management</h3>
+          <a href="#" class="launch-button" target="_blank">View Documentation</a>
+          <div class="project-description">
+            <p>A robust RESTful API built for comprehensive digital bookstore management. This API provides endpoints for book inventory management, user authentication, purchasing, and review systems.</p>
+            
+            <p>The system implements advanced backend features including role-based access control, rate limiting, caching mechanisms, and comprehensive logging for analytics and debugging.</p>
+            
+            <h4>Key Features:</h4>
+            <ul>
+              <li>JWT-based authentication and authorization</li>
+              <li>Database transactions for order processing</li>
+              <li>Scalable architecture with Redis caching</li>
+              <li>Comprehensive API documentation with Swagger</li>
+            </ul>
+            
+            <h4>Technologies Used:</h4>
+            <ul>
+              <li>Node.js with Express</li>
+              <li>MongoDB with Mongoose ODM</li>
+              <li>Redis for caching</li>
+              <li>Docker for containerization</li>
+            </ul>
+          </div>
+        `;
+      } else if (projectName.includes('Project 2')) {
+        projectCard.innerHTML = `
+          <h2>Project 2: AI Content Personalizer</h2>
+          <h3>AI-Driven Content Personalization System for Media Streaming</h3>
+          <a href="#" class="launch-button" target="_blank">View Project</a>
+          <div class="project-description">
+            <p>An intelligent content personalization system that leverages machine learning algorithms to analyze user behavior and preferences, delivering tailored content recommendations for streaming platforms.</p>
+            
+            <p>The system processes user interaction data in real-time, builds preference profiles, and continuously improves its recommendation engine through feedback loops and A/B testing frameworks.</p>
+            
+            <h4>Key Features:</h4>
+            <ul>
+              <li>Real-time user behavior analysis</li>
+              <li>Content categorization using NLP</li>
+              <li>Collaborative and content-based filtering</li>
+              <li>Personalized recommendation APIs</li>
+            </ul>
+            
+            <h4>Technologies Used:</h4>
+            <ul>
+              <li>Python with FastAPI</li>
+              <li>PostgreSQL and TimescaleDB</li>
+              <li>TensorFlow for ML models</li>
+              <li>Kubernetes for orchestration</li>
+            </ul>
+          </div>
+        `;
+      } else if (projectName.includes('Project 3')) {
+        projectCard.innerHTML = `
+          <h2>Project 3: Navigo Board</h2>
+          <h3>Dynamic Single-Page Application for Business Organization</h3>
+          <a href="https://geraldsadya-navigo-board.netlify.app" class="launch-button" target="_blank">Launch Project</a>
+          <div class="project-description">
+            <p>Navigo Board is a dynamic single-page application designed for efficient task and project management. 
+            Users can create personalized boards, categorize tasks into tabs, and track progress in real-time. Each user's data is securely stored and scoped using Firebase Authentication and Firestore, ensuring both privacy and scalability.</p>
+            
+            <p>This project leverages a modern frontend stack and cloud-based deployment pipeline to deliver speed, responsiveness, and reliability.</p>
+            
+            <h4>Technologies Used:</h4>
+            <ul>
+              <li>React (with Vite)</li>
+              <li>Firebase Authentication & Firestore</li>
+              <li>Netlify (Continuous Deployment)</li>
+            </ul>
+          </div>
+        `;
+      } else if (projectName.includes('Project 4')) {
+        projectCard.innerHTML = `
+          <h2>Project 4: Serverless Image Processor</h2>
+          <h3>Serverless Image Processing and Data Transformation Platform on AWS</h3>
+          <a href="#" class="launch-button" target="_blank">Launch Project</a>
+          <div class="project-description">
+            <p>A fully functional serverless platform on AWS that automatically processes images upon upload, transforms them according to predefined specifications, and stores both the processed images and their metadata.</p>
+            
+            <p>This event-driven architecture utilizes S3 buckets for storage, Lambda functions for processing, and DynamoDB for metadata management, creating an efficient, scalable pipeline for image transformation.</p>
+            
+            <h4>Key Features:</h4>
+            <ul>
+              <li>Automatic image resizing and grayscale conversion</li>
+              <li>Comprehensive metadata storage</li>
+              <li>Event-driven processing workflow</li>
+              <li>Optimized resource utilization</li>
+            </ul>
+            
+            <h4>Technologies Used:</h4>
+            <ul>
+              <li>AWS Lambda, S3, DynamoDB</li>
+              <li>Python with Pillow library</li>
+              <li>CloudWatch for monitoring</li>
+              <li>IAM for security management</li>
+            </ul>
+          </div>
+        `;
+      } else if (projectName.includes('Project 5')) {
+        projectCard.innerHTML = `
+          <h2>Project 5: Interactive Portfolio</h2>
+          <h3>Interactive Portfolio Website with 3D Animations</h3>
+          <a href="#" class="launch-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">View Project</a>
+          <div class="project-description">
+            <p>This Star Wars-inspired interactive portfolio showcases my work through an immersive space-themed experience. The site features orbital navigation, dynamic content revealing, and custom animations that respond to user interaction.</p>
+            
+            <p>The portfolio incorporates Three.js for 3D elements, custom CSS animations, and responsive design principles to create a memorable and unique user experience across all devices.</p>
+            
+            <h4>Technologies Used:</h4>
+            <ul>
+              <li>Three.js (3D Rendering)</li>
+              <li>CSS3 Animations</li>
+              <li>JavaScript ES6+</li>
+              <li>HTML5 Canvas</li>
+              <li>Vite (Build Tool)</li>
+            </ul>
+          </div>
+        `;
+      } else if (projectName.includes('Project 6')) {
+        projectCard.innerHTML = `
+          <h2>Project 6: Personal Blog</h2>
+          <h3>Full-Stack Blog Application with Admin Panel</h3>
+          <a href="#" class="launch-button" target="_blank">Launch Project</a>
+          <div class="project-description">
+            <p>A personal blog platform with separate guest and admin sections. The application allows for writing, editing, and publishing articles on various topics with an intuitive interface.</p>
+            
+            <p>The blog features a clean dashboard for content management, article creation with rich text editing, and secure admin authentication. All content is stored efficiently using file-based storage and served through templated views.</p>
+            
+            <h4>Technologies Used:</h4>
+            <ul>
+              <li>Python (Flask)</li>
+              <li>HTML/CSS Templates</li>
+              <li>File-based Storage</li>
+              <li>Session Authentication</li>
+              <li>Markdown Processing</li>
+            </ul>
+          </div>
+        `;
+      } else {
+        projectCard.innerHTML = `
+          <h2>${projectName}</h2>
+          <p>${projectDescription}</p>
+        `;
+      }
   
       // Add animation class
       projectCard.classList.remove('card-update');
